@@ -49,6 +49,37 @@
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(180, 149, 100, 0.4);
         }
+
+        /* Botões específicos do nav */
+        nav ul li .btn-nav {
+            padding: 8px 18px;
+            font-size: 0.85rem;
+            box-shadow: none;
+            margin-left: 5px;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: #b08d57;
+            border: 2px solid #b08d57;
+        }
+        .btn-login:hover {
+            background: #b08d57;
+            color: #fff;
+            transform: translateY(0);
+            box-shadow: 0 4px 12px rgba(176, 141, 87, 0.35);
+        }
+
+        .btn-signup {
+            background: linear-gradient(135deg, #b08d57, #d4af7a);
+            color: #fff;
+            border: 2px solid transparent;
+        }
+        .btn-signup:hover {
+            background: linear-gradient(135deg, #d4af7a, #b08d57);
+            transform: translateY(0);
+            box-shadow: 0 4px 12px rgba(176, 141, 87, 0.35);
+        }
         
         /* Header */
         header {
@@ -82,10 +113,13 @@
         nav ul {
             display: flex;
             list-style: none;
+            align-items: center;
         }
         
         nav ul li {
             margin-left: 30px;
+            display: flex;
+            align-items: center;
         }
         
         nav ul li a {
@@ -99,7 +133,7 @@
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8');
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVu[...]');
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -463,10 +497,12 @@
             
             nav ul {
                 margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
             nav ul li {
-                margin: 0 10px;
+                margin: 8px 10px;
             }
             
             .hero h1 {
@@ -493,7 +529,7 @@
             }
             
             nav ul li {
-                margin: 5px 10px;
+                margin: 5px 8px;
             }
             
             .hero h1 {
@@ -502,6 +538,11 @@
             
             .section-title h2 {
                 font-size: 2rem;
+            }
+
+            nav ul li .btn-nav {
+                font-size: 0.75rem;
+                padding: 6px 14px;
             }
         }
     </style>
@@ -520,6 +561,9 @@
                     <li><a href="#about">Sobre</a></li>
                     <li><a href="#testimonials">Depoimentos</a></li>
                     <li><a href="#contact">Contato</a></li>
+                    <li><a href="#calendar">Agenda</a></li>
+                    <li><a href="/login.html" class="btn btn-nav btn-login">Login</a></li>
+                    <li><a href="/cadastro.html" class="btn btn-nav btn-signup">Cadastro</a></li>
                 </ul>
             </nav>
         </div>
@@ -543,7 +587,7 @@
             </div>
             <div class="services-grid">
                 <div class="service-card">
-                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8')"></div>
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8[...]');"></div>
                     <div class="service-content">
                         <h3>Cortes Modernos</h3>
                         <p>Cortes de cabelo personalizados de acordo com seu estilo e formato de rosto.</p>
@@ -551,7 +595,7 @@
                     </div>
                 </div>
                 <div class="service-card">
-                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d7de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8')"></div>
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d7de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8[...]');"></div>
                     <div class="service-content">
                         <h3>Coloração</h3>
                         <p>Técnicas de coloração modernas para transformar seu visual.</p>
@@ -559,7 +603,7 @@
                     </div>
                 </div>
                 <div class="service-card">
-                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1595867818082-083862f3aaf4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8')"></div>
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1595867818082-083862f3aaf4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8[...]');"></div>
                     <div class="service-content">
                         <h3>Tratamentos Capilares</h3>
                         <p>Hidratação, reconstrução e nutrição para cabelos saudáveis.</p>
@@ -575,11 +619,11 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-img">
-                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Salão de beleza">
+                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="[...]" />
                 </div>
                 <div class="about-text">
                     <h2>Sobre Nós</h2>
-                    <p>Há mais de 10 anos, o Sutileza Hair oferece serviços de alta qualidade no segmento de beleza. Nossa missão é proporcionar aos clientes momentos de cuidado e bem-estar, realçando sua beleza natural.</p>
+                    <p>Há mais de 10 anos, o Sutileza Hair oferece serviços de alta qualidade no segmento de beleza. Nossa missão é proporcionar aos clientes momentos de cuidado e bem-estar, real�[...]</p>
                     <p>Nossa equipe é formada por profissionais qualificados e constantemente treinados nas últimas tendências e técnicas do mercado.</p>
                     <p>Valorizamos o atendimento personalizado, produtos de qualidade e um ambiente acolhedor para que sua experiência seja única e especial.</p>
                     <a href="#contact" class="btn">Entre em Contato</a>

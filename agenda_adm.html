@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Agenda (Admin) - Sutileza Hair</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    * {
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background:#f7f6f4;
+      color:#333;
+      line-height:1.5;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    a { text-decoration:none; color:inherit; }
+
+    .container {
+      width:90%;
+      max-width:1400px;
+      margin:0 auto;
+    }
+
+    /* Header / Nav (consistente) */
+    header {
+      background:#fff;
+      box-shadow:0 2px 10px rgba(0,0,0,.07);
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      z-index:100;
+    }
+    .header-container {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 0;
+    }
+    .logo {
+      font-size:26px;
+      font-weight:700;
+      color:#b08d57;
+      display:flex;
+      align-items:center;
+    }
+    .logo i { margin-right:10px; }
+
+    nav ul {
+      list-style:none;
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:28px;
+    }
+    nav ul li a {
+      font-weight:500;
+      transition:color .3s;
+    }
+    nav ul li a:hover {
+      color:#b08d57;
+    }
+
+    .btn {
+      display:inline-block;
+      background:linear-gradient(135deg,#d4af7a,#b08d57);
+      color:#fff;
+      padding:10px 22px;
+      border-radius:30px;
+      font-weight:600;
+      border:none;
+      cursor:pointer;
+      transition:.3s;
+      font-size:.85rem;
+    }
+    .btn:hover {
+      background:linear-gradient(135deg,#b08d57,#d4af7a);
+      box-shadow:0 6px 18px rgba(176,141,87,.35);
+      transform:translateY(-2px);
+    }
+    .btn-nav {
+      padding:8px 18px;
+      background:linear-gradient(135deg,#b08d57,#d4af7a);
+      font-size:.8rem;
+    }
+    .btn-login-nav {
+      background:transparent;
+      color:#b08d57;
+      border:2px solid #b08d57;
+    }
+    .btn-login-nav:hover {
+      background:#b08d57;
+      color:#fff;
+      transform:none;
+      box-shadow:0 4px 12px rgba(176,141,87,.35);
+    }
+
+    main {
+      flex:1;
+      padding:150px 0 70px;
+    }
+
+    .page-title {
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:28px;
+    }
+    .page-title h1 {
+      font-size:2.1rem;
+      color:#b08d57;
+      position:relative;
+    }
+    .page-title h1:after {
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-6px;
+      width:60%;
+      height:4px;
+      background:linear-gradient(90deg,#b08d57,#dec090);
+      border-radius:3px;
+    }
+
+    .filters {
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .filters select,
+    .filters input {
+      padding:10px 14px;
+      border:1.5px solid #d9c8aa;
+      background:#fff;
+      border-radius:10px;
+      min-width:170px;
+      font-size:.85rem;
+      outline:none;
+      transition:.25s;
+    }
+    .filters select:focus,
+    .filters input:focus {
+      border-color:#b08d57;
+      box-shadow:0 0 0 3px rgba(176,141,87,.18);
+    }
+
+    .agenda-wrapper {
+      background:#fff;
+      padding:30px 26px 40px;
+      border-radius:22px;
+      box-shadow:0 8px 30px -6px rgba(0,0,0,.12);
+      position:relative;
+      overflow:auto;
+    }
+
+    .legend {
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      font-size:.75rem;
+      margin-bottom:18px;
+    }
+    .legend span {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+    .legend i,
+    .legend b {
+      display:inline-block;
+      width:14px;
+      height:14px;
+      border-radius:4px;
+    }
+    .lg-livre { background:#ecf5ef; border:1px solid #b5d2be; }
+    .lg-ocupado { background:#ffe3d5; border:1px solid #f2bda2; }
+    .lg-bloqueado { background:#ebebeb; border:1px solid #cccccc; }
+
+    table {
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      font-size:.8rem;
+      min-width:1100px;
+    }
+    thead th {
+      position:sticky;
+      top:0;
+      background:#f1eadf;
+      color:#87683d;
+      padding:10px 12px;
+      font-weight:600;
+      text-align:center;
+      border:1px solid #e2d6c5;
+      z-index:2;
+    }
+    tbody td {
+      border:1px solid #e5dccf;
+      padding:6px 8px;
+      text-align:center;
+      height:52px;
+      position:relative;
+      cursor:pointer;
+      vertical-align:middle;
+      background:#fff;
+      transition:background .2s, color .2s;
+    }
+    tbody td.slot-livre {
+      background:#f6fbf7;
+    }
+    tbody td.slot-livre:hover {
+      background:#ecf5ef;
+    }
+    tbody td.slot-ocupado {
+      background:#ffece2;
+      color:#834f2b;
+      font-weight:600;
+    }
+    tbody td.slot-ocupado:hover {
+      background:#ffe3d5;
+    }
+    tbody td.slot-bloqueado {
+      background:#f0f0f0;
+      color:#777;
+      font-style:italic;
+      cursor:not-allowed;
+    }
+
+    tbody td:focus-visible {
+      outline:3px solid #b08d57;
+      outline-offset:-2px;
+    }
+
+    .time-col {
+      background:#faf6ef;
+      font-weight:600;
+      color:#846840;
+      width:70px;
+    }
+
+    /* Tooltip / Popover */
+    .booking-popover {
+      position:fixed;
+      top:0;
+      left:0;
+      transform:translate(-50%,-100%);
+      background:#fff;
+      border:1px solid #e1d2bd;
+      box-shadow:0 10px 30px -6px rgba(0,0,0,.25);
+      padding:14px 16px 16px;
+      border-radius:14px;
+      width:260px;
+      max-width:80vw;
+      font-size:.75rem;
+      z-index:300;
+      pointer-events:none;
+      opacity:0;
+      transition:opacity .18s, transform .18s;
+    }
+    .booking-popover.active {
+      opacity:1;
+      transform:translate(-50%,-110%);
+      pointer-events:auto;
+    }
+    .booking-popover h4 {
+      font-size:.9rem;
+      margin-bottom:6px;
+      color:#b08d57;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    .booking-popover h4 i { color:#c39a5e; }
+    .booking-popover dl {
+      display:grid;
+      grid-template-columns:70px 1fr;
+      row-gap:4px;
+      column-gap:8px;
+      margin-bottom:10px;
+    }
+    .booking-popover dt {
+      font-weight:600;
+      color:#8a744d;
+      text-align:right;
+    }
+    .booking-popover dd {
+      margin:0;
+      color:#444;
+    }
+    .popover-actions {
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+    .popover-actions button {
+      flex:1 1 45%;
+      padding:6px 10px;
+      font-size:.68rem;
+      border:none;
+      border-radius:8px;
+      background:#f1eadf;
+      color:#6f5630;
+      font-weight:600;
+      cursor:pointer;
+      transition:.2s;
+    }
+    .popover-actions button:hover {
+      background:#e7dccd;
+    }
+    .popover-actions button.danger {
+      background:#ffe2db;
+      color:#a6402f;
+    }
+    .popover-actions button.danger:hover {
+      background:#ffcfc2;
+    }
+
+    .no-select {
+      -webkit-user-select:none;
+      user-select:none;
+    }
+
+    /* Painel Lateral (opcional para edição futura) */
+    .side-panel {
+      position:fixed;
+      top:0;
+      right:-480px;
+      width:420px;
+      height:100%;
+      background:#fff;
+      box-shadow:-6px 0 18px -6px rgba(0,0,0,.18);
+      z-index:350;
+      padding:28px 30px 40px;
+      display:flex;
+      flex-direction:column;
+      transition:right .38s cubic-bezier(.74,.08,.26,.99);
+    }
+    .side-panel.open { right:0; }
+    .panel-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px;
+    }
+    .panel-header h3 {
+      color:#b08d57;
+      font-size:1.15rem;
+    }
+    .panel-close {
+      background:transparent;
+      border:none;
+      font-size:1.2rem;
+      cursor:pointer;
+      color:#b08d57;
+    }
+
+    .panel-content {
+      flex:1;
+      overflow:auto;
+      font-size:.8rem;
+    }
+    .panel-content dl {
+      display:grid;
+      grid-template-columns:110px 1fr;
+      row-gap:8px;
+      column-gap:12px;
+      margin-bottom:20px;
+    }
+    .panel-content dt {
+      font-weight:600;
+      color:#8a744d;
+      text-align:right;
+    }
+    .panel-content dd {
+      margin:0;
+      color:#444;
+    }
+
+    .panel-actions {
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .panel-actions button {
+      flex:1 1 48%;
+      padding:10px 14px;
+      border:none;
+      border-radius:10px;
+      font-size:.75rem;
+      font-weight:600;
+      cursor:pointer;
+      background:#f1eadf;
+      color:#6f5630;
+      transition:.25s;
+    }
+    .panel-actions button:hover { background:#e6dacb; }
+    .panel-actions button.primary {
+      background:linear-gradient(135deg,#d4af7a,#b08d57);
+      color:#fff;
+    }
+    .panel-actions button.primary:hover {
+      background:linear-gradient(135deg,#b08d57,#d4af7a);
+    }
+    .panel-actions button.danger {
+      background:#ffe2db;
+      color:#a6402f;
+    }
+    .panel-actions button.danger:hover {
+      background:#ffcfbf;
+    }
+
+    /* Footer (mantido estilo) */
+    footer {
+      background:#333;
+      color:#fff;
+      padding:50px 0 25px;
+      margin-top:auto;
+    }
+    .footer-content {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:30px;
+      margin-bottom:30px;
+    }
+    .footer-section h3 {
+      font-size:1.3rem;
+      margin-bottom:18px;
+      color:#d4af7a;
+    }
+    .footer-section p,
+    .footer-section li {
+      color:#ccc;
+      margin-bottom:10px;
+      font-size:.9rem;
+    }
+    .footer-section ul { list-style:none; }
+    .footer-section ul li a:hover { color:#d4af7a; }
+
+    .social-icons {
+      display:flex;
+      gap:14px;
+      margin-top:12px;
+    }
+    .social-icons a {
+      width:40px;
+      height:40px;
+      background:#444;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:50%;
+      transition:.3s;
+    }
+    .social-icons a:hover { background:#d4af7a; color:#fff; }
+
+    .footer-bottom {
+      text-align:center;
+      padding-top:18px;
+      border-top:1px solid #444;
+      color:#bbb;
+      font-size:.75rem;
+      letter-spacing:.05em;
+    }
+
+    /* Responsivo */
+    @media (max-width:1100px) {
+      .panel-header h3 { font-size:1rem; }
+    }
+    @media (max-width:860px) {
+      .filters { width:100%; }
+      .page-title { flex-direction:column; align-items:flex-start; }
+    }
+    @media (max-width:680px) {
+      .header-container { flex-direction:column; gap:12px; }
+      nav ul { gap:18px; }
+      .agenda-wrapper { padding:26px 20px 34px; }
+      table { font-size:.7rem; }
+    }
+    @media (max-width:480px) {
+      .logo { font-size:24px; }
+      .filters select,
+      .filters input { min-width:130px; }
+      .booking-popover { width:230px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Nav -->
+  <header>
+    <div class="container header-container">
+      <a href="index.html" class="logo">
+        <i class="fas fa-spa"></i>Sutileza Hair
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html#">Home</a></li>
+          <li><a href="index.html#services">Serviços</a></li>
+          <li><a href="index.html#about">Sobre</a></li>
+          <li><a href="index.html#testimonials">Depoimentos</a></li>
+          <li><a href="index.html#contact">Contato</a></li>
+          <li><a href="index.html#calendar">Agenda</a></li>
+          <li><a class="btn btn-nav btn-login-nav" href="login.html">Login</a></li>
+          <li><a class="btn btn-nav" href="cadastro.html">Cadastro</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main>
+    <div class="container">
+      <div class="page-title">
+        <h1>Agenda Administrativa</h1>
+        <div class="filters">
+          <input type="date" id="dataSelecionada">
+          <select id="filtroProfissional">
+            <option value="">Todos os Profissionais</option>
+          </select>
+          <select id="filtroServico">
+            <option value="">Todos os Serviços</option>
+          </select>
+          <button class="btn" id="btnExportar"><i class="fa-solid fa-file-export"></i>&nbsp;Exportar</button>
+        </div>
+      </div>
+
+      <div class="legend">
+        <span><b class="lg-livre"></b> Livre</span>
+        <span><b class="lg-ocupado"></b> Ocupado</span>
+        <span><b class="lg-bloqueado"></b> Bloqueado</span>
+        <span class="no-select" style="opacity:.65">Passe o mouse ou clique para detalhes</span>
+      </div>
+
+      <div class="agenda-wrapper" aria-label="Tabela de agendamentos">
+        <table id="tabelaAgenda">
+          <thead>
+            <tr>
+              <th>Horário</th>
+              <th>Segunda</th>
+              <th>Terça</th>
+              <th>Quarta</th>
+              <th>Quinta</th>
+              <th>Sexta</th>
+              <th>Sábado</th>
+            </tr>
+          </thead>
+          <tbody id="agendaBody">
+            <!-- Linhas geradas via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Popover -->
+  <div class="booking-popover" id="bookingPopover" role="dialog" aria-hidden="true">
+    <h4><i class="fa-solid fa-calendar-check"></i><span id="popoverTitulo">Detalhes</span></h4>
+    <dl>
+      <dt>Cliente:</dt><dd id="pvCliente">—</dd>
+      <dt>Profissional:</dt><dd id="pvProfissional">—</dd>
+      <dt>Serviço:</dt><dd id="pvServico">—</dd>
+      <dt>Duração:</dt><dd id="pvDuracao">—</dd>
+      <dt>Status:</dt><dd id="pvStatus">—</dd>
+      <dt>Horário:</dt><dd id="pvHorario">—</dd>
+    </dl>
+    <div class="popover-actions">
+      <button type="button" id="btnEditar">Editar</button>
+      <button type="button" id="btnMover">Mover</button>
+      <button type="button" class="danger" id="btnCancelar">Cancelar</button>
+      <button type="button" id="btnFecharPopover">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Painel lateral (para futura edição) -->
+  <aside class="side-panel" id="sidePanel" aria-hidden="true">
+    <div class="panel-header">
+      <h3 id="panelTitle">Edição de Agendamento</h3>
+      <button class="panel-close" id="panelClose" aria-label="Fechar painel"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="panel-content" id="panelContent">
+      <dl id="panelDetails"></dl>
+      <form id="panelForm">
+        <!-- Futura edição (placeholder) -->
+        <p style="color:#666;margin-bottom:18px;">Funcionalidade de edição pode ser implementada aqui.</p>
+      </form>
+    </div>
+    <div class="panel-actions">
+      <button type="button" class="danger" id="panelDelete">Cancelar Agendamento</button>
+      <button type="button" class="primary" id="panelSave">Salvar Alterações</button>
+    </div>
+  </aside>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Sutileza Hair</h3>
+          <p>Transformando autoestima através de serviços de beleza de alta qualidade há mais de 10 anos.</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+            <a href="#"><i class="fab fa-pinterest"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Links Rápidos</h3>
+          <ul>
+            <li><a href="index.html#">Home</a></li>
+            <li><a href="index.html#services">Serviços</a></li>
+            <li><a href="index.html#about">Sobre Nós</a></li>
+            <li><a href="index.html#testimonials">Depoimentos</a></li>
+            <li><a href="index.html#contact">Contato</a></li>
+            <li><a href="index.html#calendar">Agenda</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Horário de Funcionamento</h3>
+          <p>Segunda a Sexta: 8h às 20h</p>
+          <p>Sábado: 8h às 18h</p>
+          <p>Domingo: Fechado</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Sutileza Hair - Todos os direitos reservados</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /*******************
+     * Configurações iniciais simuladas
+     *******************/
+    const horarios = [
+      "08:00","08:30","09:00","09:30","10:00","10:30",
+      "11:00","11:30","12:00","12:30","13:00","13:30",
+      "14:00","14:30","15:00","15:30","16:00","16:30",
+      "17:00","17:30","18:00"
+    ];
+
+    // Dias índice: 1=Segunda ... 6=Sábado
+    // status: livre | ocupado | bloqueado
+    const agendamentos = [
+      { dia:1, hora:"08:30", cliente:"Marina Silva", profissional:"Paula", servico:"Corte Feminino", duracao:"45m", status:"ocupado" },
+      { dia:1, hora:"10:00", cliente:"Carlos Oliveira", profissional:"Rafa", servico:"Coloração", duracao:"1h30", status:"ocupado" },
+      { dia:1, hora:"14:00", cliente:"--", profissional:"Equipe", servico:"Intervalo", duracao:"30m", status:"bloqueado" },
+      { dia:2, hora:"09:00", cliente:"Ana Mendes", profissional:"Paula", servico:"Hidratação", duracao:"1h", status:"ocupado" },
+      { dia:2, hora:"15:30", cliente:"João Souza", profissional:"Rafa", servico:"Corte Masculino", duracao:"30m", status:"ocupado" },
+      { dia:3, hora:"11:00", cliente:"Beatriz Lima", profissional:"Carla", servico:"Luzes", duracao:"2h", status:"ocupado" },
+      { dia:3, hora:"16:30", cliente:"--", profissional:"Equipe", servico:"Reunião", duracao:"30m", status:"bloqueado" },
+      { dia:4, hora:"08:00", cliente:"Patrícia Reis", profissional:"Carla", servico:"Escova", duracao:"45m", status:"ocupado" },
+      { dia:4, hora:"13:30", cliente:"Renato Gomes", profissional:"Rafa", servico:"Barba + Corte", duracao:"1h", status:"ocupado" },
+      { dia:5, hora:"10:30", cliente:"Luciana Prado", profissional:"Paula", servico:"Botox Capilar", duracao:"2h", status:"ocupado" },
+      { dia:5, hora:"17:00", cliente:"--", profissional:"Equipe", servico:"Manutenção", duracao:"1h", status:"bloqueado" },
+      { dia:6, hora:"09:30", cliente:"Sofia Martins", profissional:"Carla", servico:"Penteado", duracao:"1h15", status:"ocupado" },
+      { dia:6, hora:"11:30", cliente:"Marcos Vinicius", profissional:"Rafa", servico:"Corte Masculino", duracao:"30m", status:"ocupado" },
+      { dia:6, hora:"15:00", cliente:"Fernanda Rocha", profissional:"Paula", servico:"Tratamento Nutrição", duracao:"1h", status:"ocupado" }
+    ];
+
+    const profissionais = [...new Set(agendamentos.filter(a => a.profissional && a.profissional !== "Equipe" && a.cliente !== "--").map(a => a.profissional))].sort();
+    const servicos = [...new Set(agendamentos.filter(a => a.servico && !/Intervalo|Reunião|Manutenção/i.test(a.servico)).map(a => a.servico))].sort();
+
+    const filtroProfissional = document.getElementById('filtroProfissional');
+    const filtroServico = document.getElementById('filtroServico');
+
+    profissionais.forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p;
+      opt.textContent = p;
+      filtroProfissional.appendChild(opt);
+    });
+
+    servicos.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s;
+      opt.textContent = s;
+      filtroServico.appendChild(opt);
+    });
+
+    /*******************
+     * Renderização da tabela
+     *******************/
+    const agendaBody = document.getElementById('agendaBody');
+
+    function getAgendamento(dia, hora) {
+      return agendamentos.find(a => a.dia === dia && a.hora === hora);
+    }
+
+    function passaFiltro(ag) {
+      if (!ag) return true;
+      if (filtroProfissional.value && ag.profissional !== filtroProfissional.value) return false;
+      if (filtroServico.value && ag.servico !== filtroServico.value) return false;
+      return true;
+    }
+
+    function renderTabela() {
+      agendaBody.innerHTML = "";
+      horarios.forEach(hora => {
+        const tr = document.createElement('tr');
+
+        // Coluna horário
+        const timeTd = document.createElement('td');
+        timeTd.textContent = hora;
+        timeTd.className = "time-col";
+        timeTd.setAttribute('aria-label', `Horário ${hora}`);
+        tr.appendChild(timeTd);
+
+        for (let dia = 1; dia <= 6; dia++) {
+          const ag = getAgendamento(dia, hora);
+          const td = document.createElement('td');
+          td.tabIndex = 0; // acessível
+          td.dataset.hora = hora;
+          td.dataset.dia = dia;
+
+            if (ag) {
+              td.dataset.cliente = ag.cliente;
+              td.dataset.profissional = ag.profissional;
+              td.dataset.servico = ag.servico;
+              td.dataset.duracao = ag.duracao;
+              td.dataset.status = ag.status;
+
+              if (!passaFiltro(ag)) {
+                // Ainda mostrar como livre para não quebrar layout visual filtrado
+                td.className = "slot-livre";
+                td.innerHTML = "<span style='opacity:.25'>Livre</span>";
+              } else {
+                if (ag.status === "ocupado") {
+                  td.classList.add("slot-ocupado");
+                  td.innerHTML = `<div style="font-size:.65rem;line-height:1.15">
+                      <strong>${ag.servico}</strong><br>
+                      <span style="opacity:.75">${ag.profissional}</span>
+                    </div>`;
+                } else if (ag.status === "bloqueado") {
+                  td.classList.add("slot-bloqueado");
+                  td.innerHTML = `<span style="font-size:.6rem;opacity:.7">${ag.servico}</span>`;
+                  td.setAttribute('aria-disabled','true');
+                }
+              }
+            } else {
+              td.className = "slot-livre";
+              td.innerHTML = "<span style='font-size:.65rem;opacity:.55'>Livre</span>";
+              td.dataset.status = "livre";
+            }
+
+          tr.appendChild(td);
+        }
+
+        agendaBody.appendChild(tr);
+      });
+    }
+
+    filtroProfissional.addEventListener('change', renderTabela);
+    filtroServico.addEventListener('change', renderTabela);
+
+    renderTabela();
+
+    /*******************
+     * Popover: hover / clique
+     *******************/
+    const popover = document.getElementById('bookingPopover');
+    const pvCliente = document.getElementById('pvCliente');
+    const pvProfissional = document.getElementById('pvProfissional');
+    const pvServico = document.getElementById('pvServico');
+    const pvDuracao = document.getElementById('pvDuracao');
+    const pvStatus = document.getElementById('pvStatus');
+    const pvHorario = document.getElementById('pvHorario');
+    const popoverTitulo = document.getElementById('popoverTitulo');
+
+    const btnFecharPopover = document.getElementById('btnFecharPopover');
+    const btnEditar = document.getElementById('btnEditar');
+    const btnMover = document.getElementById('btnMover');
+    const btnCancelar = document.getElementById('btnCancelar');
+
+    let popoverAnchor = null;
+    let popoverPinned = false;
+
+    function statusLegivel(status) {
+      if (status === "ocupado") return "Ocupado";
+      if (status === "livre") return "Livre";
+      if (status === "bloqueado") return "Bloqueado";
+      return status;
+    }
+
+    function openPopover(td, event, pinned=false) {
+      const status = td.dataset.status;
+      popoverAnchor = td;
+      popoverPinned = pinned;
+
+      if (status === "bloqueado") {
+        popoverTitulo.textContent = "Bloqueado";
+        pvCliente.textContent = td.dataset.cliente || "--";
+        pvProfissional.textContent = td.dataset.profissional || "--";
+        pvServico.textContent = td.dataset.servico || "--";
+        pvDuracao.textContent = td.dataset.duracao || "--";
+      } else if (status === "ocupado") {
+        popoverTitulo.textContent = "Agendamento";
+        pvCliente.textContent = td.dataset.cliente;
+        pvProfissional.textContent = td.dataset.profissional;
+        pvServico.textContent = td.dataset.servico;
+        pvDuracao.textContent = td.dataset.duracao;
+      } else {
+        popoverTitulo.textContent = "Horário Livre";
+        pvCliente.textContent = "--";
+        pvProfissional.textContent = "--";
+        pvServico.textContent = "--";
+        pvDuracao.textContent = "--";
+      }
+
+      pvStatus.textContent = statusLegivel(status);
+      pvHorario.textContent = `${td.dataset.hora} - Dia ${td.dataset.dia}`;
+
+      const rect = td.getBoundingClientRect();
+      const popRect = popover.getBoundingClientRect();
+      let top = rect.top + window.scrollY - 10;
+      let left = rect.left + rect.width / 2;
+
+      // Ajustar se for muito alto
+      if (top - popRect.height < window.scrollY + 80) {
+        top = rect.bottom + window.scrollY + popRect.height + 20;
+      }
+
+      popover.style.top = `${top}px`;
+      popover.style.left = `${left}px`;
+      popover.classList.add('active');
+      popover.setAttribute('aria-hidden','false');
+
+      // Ajuste para viewport
+      requestAnimationFrame(() => {
+        const bounds = popover.getBoundingClientRect();
+        if (bounds.right > window.innerWidth - 10) {
+          popover.style.left = `${left - (bounds.right - window.innerWidth) - 14}px`;
+        }
+        if (bounds.left < 10) {
+          popover.style.left = `${left + (10 - bounds.left)}px`;
+        }
+      });
+    }
+
+    function closePopover(force=false) {
+      if (!force && popoverPinned) return;
+      popover.classList.remove('active');
+      popover.setAttribute('aria-hidden','true');
+      popoverAnchor = null;
+      popoverPinned = false;
+    }
+
+    agendaBody.addEventListener('mousemove', (e) => {
+      if (popoverPinned) return;
+      const td = e.target.closest('td');
+      if (!td || td.classList.contains('time-col')) {
+        closePopover();
+        return;
+      }
+      openPopover(td, e, false);
+    });
+
+    agendaBody.addEventListener('click', (e) => {
+      const td = e.target.closest('td');
+      if (!td || td.classList.contains('time-col')) return;
+      // Toggle pin
+      if (popoverPinned && popoverAnchor === td) {
+        closePopover(true);
+      } else {
+        openPopover(td, e, true);
+      }
+    });
+
+    agendaBody.addEventListener('focusin', (e) => {
+      const td = e.target.closest('td');
+      if (!td || td.classList.contains('time-col')) return;
+      openPopover(td, e, false);
+    });
+
+    agendaBody.addEventListener('focusout', (e) => {
+      if (popoverPinned) return;
+      setTimeout(() => {
+        if (!agendaBody.contains(document.activeElement)) {
+          closePopover(true);
+        }
+      }, 150);
+    });
+
+    btnFecharPopover.addEventListener('click', () => closePopover(true));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === "Escape") {
+        if (popoverPinned) {
+          popoverPinned = false;
+        }
+        closePopover(true);
+      }
+    });
+
+    // Simulações de ações
+    btnEditar.addEventListener('click', () => {
+      if (!popoverAnchor) return;
+      alert('Ação de edição (simulação).');
+    });
+    btnMover.addEventListener('click', () => {
+      if (!popoverAnchor) return;
+      alert('Ação de mover (simulação).');
+    });
+    btnCancelar.addEventListener('click', () => {
+      if (!popoverAnchor) return;
+      const status = popoverAnchor.dataset.status;
+      if (status !== 'ocupado') {
+        alert('Nada para cancelar.');
+        return;
+      }
+      if (confirm('Cancelar este agendamento?')) {
+        popoverAnchor.className = 'slot-livre';
+        popoverAnchor.innerHTML = "<span style='font-size:.65rem;opacity:.55'>Livre</span>";
+        popoverAnchor.dataset.status = 'livre';
+        delete popoverAnchor.dataset.cliente;
+        delete popoverAnchor.dataset.servico;
+        delete popoverAnchor.dataset.profissional;
+        delete popoverAnchor.dataset.duracao;
+        closePopover(true);
+        alert('Agendamento cancelado (simulação).');
+      }
+    });
+
+    /*******************
+     * Exportação simples (CSV)
+     *******************/
+    document.getElementById('btnExportar').addEventListener('click', () => {
+      const linhas = ["Dia,Hora,Status,Cliente,Profissional,Serviço,Duração"];
+      agendamentos.forEach(a => {
+        linhas.push(`${a.dia},${a.hora},${a.status},${a.cliente},${a.profissional},${a.servico},${a.duracao}`);
+      });
+      const blob = new Blob([linhas.join('\\n')], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = "agenda_sutileza.csv";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
+
+    /*******************
+     * Painel lateral placeholders (não funcional completo)
+     *******************/
+    const sidePanel = document.getElementById('sidePanel');
+    const panelClose = document.getElementById('panelClose');
+
+    panelClose.addEventListener('click', () => {
+      sidePanel.classList.remove('open');
+      sidePanel.setAttribute('aria-hidden','true');
+    });
+
+    // Exemplo de como abrir (não ligado a nenhuma ação real)
+    // sidePanel.classList.add('open'); // (descomentar para testar)
+  </script>
+</body>
+</html>
