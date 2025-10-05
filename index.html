@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beleza & Estilo - Salão de Beleza</title>
+    <title>Sutileza Hair - Salão de Beleza</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Reset e estilos gerais */
@@ -99,7 +99,9 @@
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80') no-repeat center center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8');
+            background-size: cover;
+            background-position: center;
             height: 100vh;
             display: flex;
             align-items: center;
@@ -284,17 +286,13 @@
             background-color: white;
         }
         
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-        
         .contact-info {
             background: linear-gradient(135deg, #b08d57, #d4af7a);
             padding: 40px;
             border-radius: 10px;
             color: white;
+            max-width: 600px;
+            margin: 0 auto;
         }
         
         .contact-info h3 {
@@ -313,40 +311,73 @@
             margin-right: 15px;
         }
         
-        .contact-form {
-            background: #f9f5f0;
-            padding: 40px;
-            border-radius: 10px;
+        /* Calendar Styles */
+        .calendar-container {
+            padding: 40px 0;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
-        .contact-form h3 {
-            font-size: 1.8rem;
-            color: #b08d57;
+        .calendar-header {
+            text-align: center;
             margin-bottom: 20px;
         }
         
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-        
-        .form-group input,
-        .form-group textarea {
+        .calendar-table {
             width: 100%;
-            padding: 12px;
+            border-collapse: collapse;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
         }
         
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
+        .calendar-table th, .calendar-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        .calendar-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .calendar-table td {
+            height: 40px;
+        }
+        
+        .calendar-time {
+            font-weight: bold;
+            background-color: #f9f5f0;
+        }
+        
+        .booked {
+            background-color: #ffcccc;
+            color: #cc0000;
+        }
+        
+        /* WhatsApp Button */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-button i {
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .whatsapp-button:hover {
+            transform: scale(1.1);
+            background-color: #128C7E;
         }
         
         /* Footer */
@@ -416,8 +447,7 @@
         
         /* Responsividade */
         @media (max-width: 992px) {
-            .about-content,
-            .contact-grid {
+            .about-content {
                 grid-template-columns: 1fr;
             }
             
@@ -446,6 +476,14 @@
             .hero p {
                 font-size: 1rem;
             }
+            
+            .calendar-container {
+                overflow-x: auto;
+            }
+            
+            .calendar-table {
+                min-width: 600px;
+            }
         }
         
         @media (max-width: 576px) {
@@ -473,7 +511,7 @@
     <header>
         <div class="container header-container">
             <a href="#" class="logo">
-                <i class="fas fa-spa"></i>Beleza & Estilo
+                <i class="fas fa-spa"></i>Sutileza Hair
             </a>
             <nav>
                 <ul>
@@ -505,7 +543,7 @@
             </div>
             <div class="services-grid">
                 <div class="service-card">
-                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80');"></div>
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8')"></div>
                     <div class="service-content">
                         <h3>Cortes Modernos</h3>
                         <p>Cortes de cabelo personalizados de acordo com seu estilo e formato de rosto.</p>
@@ -513,7 +551,7 @@
                     </div>
                 </div>
                 <div class="service-card">
-                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d7de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d7de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8')"></div>
                     <div class="service-content">
                         <h3>Coloração</h3>
                         <p>Técnicas de coloração modernas para transformar seu visual.</p>
@@ -521,7 +559,7 @@
                     </div>
                 </div>
                 <div class="service-card">
-                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1595867818082-083862f3aaf4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1595867818082-083862f3aaf4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8')"></div>
                     <div class="service-content">
                         <h3>Tratamentos Capilares</h3>
                         <p>Hidratação, reconstrução e nutrição para cabelos saudáveis.</p>
@@ -537,11 +575,11 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-img">
-                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Salão de Beleza">
+                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Salão de beleza">
                 </div>
                 <div class="about-text">
                     <h2>Sobre Nós</h2>
-                    <p>Há mais de 10 anos, o Beleza & Estilo oferece serviços de alta qualidade no segmento de beleza. Nossa missão é proporcionar aos clientes momentos de cuidado e bem-estar, realçando sua beleza natural.</p>
+                    <p>Há mais de 10 anos, o Sutileza Hair oferece serviços de alta qualidade no segmento de beleza. Nossa missão é proporcionar aos clientes momentos de cuidado e bem-estar, realçando sua beleza natural.</p>
                     <p>Nossa equipe é formada por profissionais qualificados e constantemente treinados nas últimas tendências e técnicas do mercado.</p>
                     <p>Valorizamos o atendimento personalizado, produtos de qualidade e um ambiente acolhedor para que sua experiência seja única e especial.</p>
                     <a href="#contact" class="btn">Entre em Contato</a>
@@ -598,6 +636,127 @@
         </div>
     </section>
 
+    <!-- Calendar Section -->
+    <section class="calendar" id="calendar">
+        <div class="container">
+            <div class="section-title">
+                <h2>Agenda</h2>
+                <p>Confira os horários disponíveis para agendamento</p>
+            </div>
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <h3>Semana: 05/10/2023 - 11/10/2023</h3>
+                </div>
+                <table class="calendar-table">
+                    <thead>
+                        <tr>
+                            <th>Horário</th>
+                            <th>Segunda</th>
+                            <th>Terça</th>
+                            <th>Quarta</th>
+                            <th>Quinta</th>
+                            <th>Sexta</th>
+                            <th>Sábado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="calendar-time">08:00</td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="calendar-time">08:30</td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="calendar-time">09:00</td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                        </tr>
+                        <tr>
+                            <td class="calendar-time">09:30</td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                        </tr>
+                        <tr>
+                            <td class="calendar-time">10:00</td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="calendar-time">10:30</td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="calendar-time">11:00</td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                            <td class="booked">Ocupado</td>
+                            <td class="booked">Ocupado</td>
+                        </tr>
+                        <tr>
+                            <td class="calendar-time">11:30</td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                        </tr>
+                        <tr>
+                            <td class="calendar-time">12:00</td>
+                            <td></td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="calendar-time">12:30</td>
+                            <td></td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                            <td class="booked">Ocupado</td>
+                            <td></td>
+                        </tr>
+                        <!-- Adicione mais horários conforme necessário -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section class="contact" id="contact">
         <div class="container">
@@ -605,69 +764,50 @@
                 <h2>Entre em Contato</h2>
                 <p>Agende seu horário ou tire suas dúvidas</p>
             </div>
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <h3>Informações de Contato</h3>
-                    <div class="contact-detail">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <p>Rua das Flores, 123</p>
-                            <p>Centro, São Paulo - SP</p>
-                        </div>
-                    </div>
-                    <div class="contact-detail">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <p>(11) 3456-7890</p>
-                            <p>(11) 98765-4321</p>
-                        </div>
-                    </div>
-                    <div class="contact-detail">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <p>contato@belezaestilo.com.br</p>
-                        </div>
-                    </div>
-                    <div class="contact-detail">
-                        <i class="fas fa-clock"></i>
-                        <div>
-                            <p>Segunda a Sexta: 8h às 20h</p>
-                            <p>Sábado: 8h às 18h</p>
-                        </div>
+            <div class="contact-info">
+                <h3>Informações de Contato</h3>
+                <div class="contact-detail">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <p>Rua das Flores, 123</p>
+                        <p>Centro, São Paulo - SP</p>
                     </div>
                 </div>
-                <div class="contact-form">
-                    <h3>Envie uma Mensagem</h3>
-                    <form>
-                        <div class="form-group">
-                            <label for="name">Nome</label>
-                            <input type="text" id="name" placeholder="Seu nome completo">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">E-mail</label>
-                            <input type="email" id="email" placeholder="Seu melhor e-mail">
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Telefone</label>
-                            <input type="tel" id="phone" placeholder="Seu telefone">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Mensagem</label>
-                            <textarea id="message" placeholder="Como podemos ajudar?"></textarea>
-                        </div>
-                        <button type="submit" class="btn">Enviar Mensagem</button>
-                    </form>
+                <div class="contact-detail">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <p>(11) 3456-7890</p>
+                        <p>(11) 98765-4321</p>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <p>contato@sutilezahair.com.br</p>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <p>Segunda a Sexta: 8h às 20h</p>
+                        <p>Sábado: 8h às 18h</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- WhatsApp Button -->
+    <a href="#" class="whatsapp-button">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Beleza & Estilo</h3>
+                    <h3>Sutileza Hair</h3>
                     <p>Transformando autoestima através de serviços de beleza de alta qualidade há mais de 10 anos.</p>
                     <div class="social-icons">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -684,6 +824,7 @@
                         <li><a href="#about">Sobre Nós</a></li>
                         <li><a href="#testimonials">Depoimentos</a></li>
                         <li><a href="#contact">Contato</a></li>
+                        <li><a href="#calendar">Agenda</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -694,7 +835,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 Beleza & Estilo - Todos os direitos reservados</p>
+                <p>&copy; 2023 Sutileza Hair - Todos os direitos reservados</p>
             </div>
         </div>
     </footer>
