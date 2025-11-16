@@ -1,0 +1,58 @@
+<%- include("./includes/head.ejs") %>
+    <link rel="stylesheet" href="css/login.css">
+    <title>Login</title>
+    </head>
+
+    <body>
+        <%- include("./includes/navigation.ejs") %>
+            <main>
+                <div class="login-wrapper" id="login">
+                    <div class="login-header">
+                        <h1>Entrar</h1>
+                        <p>Acesse sua conta para gerenciar agendamentos</p>
+                    </div>
+
+                    <form action="#" method="post" autocomplete="on" novalidate>
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input class="input-control" type="email" id="email" name="email"
+                                placeholder="seuemail@exemplo.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="senha">Senha</label>
+                            <input class="input-control" type="password" id="senha" name="senha" placeholder="••••••••"
+                                minlength="6" required>
+                        </div>
+
+                        <div class="form-row-inline">
+                            <label class="remember">
+                                <input type="checkbox" name="lembrar" value="1">
+                                <span>Lembrar-me</span>
+                            </label>
+                            <a href="#" class="link-small">Esqueci minha senha</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-submit">Login</button>
+
+                        <div class="divider">ou</div>
+
+                        <div class="social-login">
+                            <button type="button" class="social-btn">
+                                <i class="fab fa-google"></i> Google
+                            </button>
+                            <button type="button" class="social-btn">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </button>
+                        </div>
+
+                        <p class="signup-hint">
+                            Não tem conta?
+                            <a href="cadastro.html">Crie agora</a>
+                        </p>
+                    </form>
+                </div>
+            </main>
+
+
+            <%- include("./includes/footer.ejs") %>

@@ -1,0 +1,97 @@
+<%- include("./includes/head.ejs") %>
+    <link rel="stylesheet" href="css/agenda_adm.css">
+    <title>Agenda</title>
+    </head>
+
+    <body>
+        <%- include("./includes/navigation.ejs") %>
+        <main>
+            <div class="container">
+                <div class="page-title">
+                    <h1>Agenda Administrativa</h1>
+                    <div class="filters">
+                        <input type="date" id="dataSelecionada">
+                        <select id="filtroProfissional">
+                            <option value="">Todos os Profissionais</option>
+                        </select>
+                        <select id="filtroServico">
+                            <option value="">Todos os Serviços</option>
+                        </select>
+                        <button class="btn" id="btnExportar"><i
+                                class="fa-solid fa-file-export"></i>&nbsp;Exportar</button>
+                    </div>
+                </div>
+
+                <div class="legend">
+                    <span><b class="lg-livre"></b> Livre</span>
+                    <span><b class="lg-ocupado"></b> Ocupado</span>
+                    <span><b class="lg-bloqueado"></b> Bloqueado</span>
+                    <span class="no-select" style="opacity:.65">Passe o mouse ou clique para detalhes</span>
+                </div>
+
+                <div class="agenda-wrapper" aria-label="Tabela de agendamentos">
+                    <table id="tabelaAgenda">
+                        <thead>
+                            <tr>
+                                <th>Horário</th>
+                                <th>Segunda</th>
+                                <th>Terça</th>
+                                <th>Quarta</th>
+                                <th>Quinta</th>
+                                <th>Sexta</th>
+                                <th>Sábado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="agendaBody">
+                            <!-- Linhas geradas via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <!-- Popover -->
+        <div class="booking-popover" id="bookingPopover" role="dialog" aria-hidden="true">
+            <h4><i class="fa-solid fa-calendar-check"></i><span id="popoverTitulo">Detalhes</span></h4>
+            <dl>
+                <dt>Cliente:</dt>
+                <dd id="pvCliente">—</dd>
+                <dt>Profissional:</dt>
+                <dd id="pvProfissional">—</dd>
+                <dt>Serviço:</dt>
+                <dd id="pvServico">—</dd>
+                <dt>Duração:</dt>
+                <dd id="pvDuracao">—</dd>
+                <dt>Status:</dt>
+                <dd id="pvStatus">—</dd>
+                <dt>Horário:</dt>
+                <dd id="pvHorario">—</dd>
+            </dl>
+            <div class="popover-actions">
+                <button type="button" id="btnEditar">Editar</button>
+                <button type="button" id="btnMover">Mover</button>
+                <button type="button" class="danger" id="btnCancelar">Cancelar</button>
+                <button type="button" id="btnFecharPopover">Fechar</button>
+            </div>
+        </div>
+
+        <!-- Painel lateral (para futura edição) -->
+        <aside class="side-panel" id="sidePanel" aria-hidden="true">
+            <div class="panel-header">
+                <h3 id="panelTitle">Edição de Agendamento</h3>
+                <button class="panel-close" id="panelClose" aria-label="Fechar painel"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="panel-content" id="panelContent">
+                <dl id="panelDetails"></dl>
+                <form id="panelForm">
+                    <!-- Futura edição (placeholder) -->
+                    <p style="color:#666;margin-bottom:18px;">Funcionalidade de edição pode ser implementada aqui.</p>
+                </form>
+            </div>
+            <div class="panel-actions">
+                <button type="button" class="danger" id="panelDelete">Cancelar Agendamento</button>
+                <button type="button" class="primary" id="panelSave">Salvar Alterações</button>
+            </div>
+        </aside>
+        <%- include("./includes/footer.ejs") %>
