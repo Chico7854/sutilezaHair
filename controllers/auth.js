@@ -17,7 +17,6 @@ export const postLogin = async (req, res) => {
         }
 
         if (senha == cliente.senha) {
-            console.log("Entrou");
             res.redirect("/");
         } else {
             res.redirect("/login");
@@ -31,8 +30,6 @@ export const postLogin = async (req, res) => {
 export const postCadastro = async (req, res) => {
     const { nome, telefone, email, genero, senha } = req.body;
     const comoConheceu = req.body.canal;
-
-    console.log(nome);
 
     const cliente = new Cliente({
         nome: nome,

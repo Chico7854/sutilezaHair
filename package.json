@@ -139,8 +139,8 @@
     "xtend": "^4.0.2"
   },
   "scripts": {
-    "start": "nodemon index.js",
-    "start-server": "node index.js"
+    "start": "node index.js",
+    "start-server": "nodemon index.js"
   },
   "repository": {
     "type": "git",
