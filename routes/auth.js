@@ -12,4 +12,6 @@ router.get("/cadastro", authController.getCadastro);
 
 router.post("/cadastro", authController.postCadastro);
 
+router.post("/logout", authController.postLogout);
+
 export default router;

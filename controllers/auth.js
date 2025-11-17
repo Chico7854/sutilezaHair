@@ -17,6 +17,12 @@ export const postLogin = async (req, res) => {
         }
 
         if (senha == cliente.senha) {
+            req.session.cliente = cliente;
+            req.session.isLoggedIn = true;
+            if (email == "lucas-tanaka@hotmail.com") {
+                req.session.isAdm = true;
+            }
+            await req.session.save();
             res.redirect("/");
         } else {
             res.redirect("/login");
@@ -43,4 +49,9 @@ export const postCadastro = async (req, res) => {
     await cliente.save();
 
     return res.redirect("/");
+}
+
+export const postLogout = async (req, res) => {
+    await req.session.destroy();
+    res.redirect("/");
 }
