@@ -11,7 +11,7 @@ import mainRoutes from "./routes/main.js"
 import authRoutes from "./routes/auth.js"
 
 const __dirname = getDirname(import.meta.url)
-const MONGODB_URI = "mongodb+srv://lacus7854:dl2RZ1UdK4Xd$9N@cluster0.rkwh7xn.mongodb.net/SutilezaHair"
+const MONGODB_URI = "mongodb+srv://lacus7854:dl2RZ1UdK4Xd%249N@cluster0.rkwh7xn.mongodb.net/SutilezaHair"
 
 const app = express();
 const port = process.env.PORT || 3000;
