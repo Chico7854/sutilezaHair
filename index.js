@@ -14,6 +14,7 @@ const __dirname = getDirname(import.meta.url)
 const MONGODB_URI = "mongodb+srv://lacus7854:dl2RZ1UdK4Xd$9N@cluster0.rkwh7xn.mongodb.net/SutilezaHair"
 
 const app = express();
+const port = process.env.PORT || 3000;
 const mongoDBSession = connectMongoDBSession(session);
 const storeSession = new mongoDBSession({
     uri: MONGODB_URI,
@@ -37,7 +38,7 @@ app.use(authRoutes);
 
 mongoose.connect(MONGODB_URI)
     .then(() => {
-        app.listen(3000);
+        app.listen(port);
     })
     .catch((err) => {
         console.log(err);
