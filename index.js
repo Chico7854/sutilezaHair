@@ -16,10 +16,10 @@ const MONGODB_URI = "mongodb+srv://lacus7854:dl2RZ1UdK4Xd$9N@cluster0.rkwh7xn.mo
 const app = express();
 const port = process.env.PORT || 3000;
 // const mongoDBSession = connectMongoDBSession(session);
-const storeSession = new mongoDBSession({
-    uri: MONGODB_URI,
-    collection: "sessions"
-});
+// const storeSession = new mongoDBSession({
+//     uri: MONGODB_URI,
+//     collection: "sessions"
+// });
 
 app.set("view engine", "ejs");
 app.set("views", "views");
