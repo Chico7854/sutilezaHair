@@ -1,6 +1,9 @@
 import path from "path";
 
 import express from "express";
+import mongoose from "mongoose";
+import session from "express-session";
+import connectMongoDBSession from "connect-mongodb-session";
 
 import { getDirname } from "./utils/pathHelpers.js";
 
@@ -8,16 +11,34 @@ import mainRoutes from "./routes/main.js"
 import authRoutes from "./routes/auth.js"
 
 const __dirname = getDirname(import.meta.url)
+const MONGODB_URI = "mongodb+srv://lacus7854:dl2RZ1UdK4Xd$9N@cluster0.rkwh7xn.mongodb.net/SutilezaHair"
 
 const app = express();
+const mongoDBSession = connectMongoDBSession(session);
+const storeSession = new mongoDBSession({
+    uri: MONGODB_URI,
+    collection: "sessions"
+});
 
 app.set("view engine", "ejs");
 app.set("views", "views");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+    store: storeSession
+}));
 
 app.use(mainRoutes);
 app.use(authRoutes);
 
-app.listen(3000);
+mongoose.connect(MONGODB_URI)
+    .then(() => {
+        app.listen(3000);
+    })
+    .catch((err) => {
+        console.log(err);
+    });

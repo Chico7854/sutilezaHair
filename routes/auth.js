@@ -1,14 +1,15 @@
 import express from "express";
-import path from "path";
+
+import * as authController from "../controllers/auth.js";
 
 const router = express.Router();
 
-router.get("/login", (req, res) => {
-    res.render("login");
-});
+router.get("/login", authController.getLogin);
 
-router.get("/cadastro", (req, res) => {
-    res.render("cadastro");
-});
+router.post("/login", authController.postLogin);
+
+router.get("/cadastro", authController.getCadastro);
+
+router.post("/cadastro", authController.postCadastro);
 
 export default router;
