@@ -3,7 +3,7 @@ import path from "path";
 import express from "express";
 import mongoose from "mongoose";
 import session from "express-session";
-import connectMongoDBSession from "connect-mongodb-session";
+// import connectMongoDBSession from "connect-mongodb-session";
 
 import { getDirname } from "./utils/pathHelpers.js";
 
@@ -15,7 +15,7 @@ const MONGODB_URI = "mongodb+srv://lacus7854:dl2RZ1UdK4Xd$9N@cluster0.rkwh7xn.mo
 
 const app = express();
 const port = process.env.PORT || 3000;
-const mongoDBSession = connectMongoDBSession(session);
+// const mongoDBSession = connectMongoDBSession(session);
 const storeSession = new mongoDBSession({
     uri: MONGODB_URI,
     collection: "sessions"
@@ -26,12 +26,12 @@ app.set("views", "views");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-app.use(session({
-    secret: "secret",
-    resave: false,
-    saveUninitialized: false,
-    store: storeSession
-}));
+// app.use(session({
+//     secret: "secret",
+//     resave: false,
+//     saveUninitialized: false,
+//     store: storeSession
+// }));
 
 app.use(mainRoutes);
 app.use(authRoutes);
