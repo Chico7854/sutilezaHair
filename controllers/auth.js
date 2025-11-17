@@ -48,6 +48,9 @@ export const postCadastro = async (req, res) => {
 
     await cliente.save();
 
+    req.session.isLoggedIn = true;
+    await req.session.save();
+
     return res.redirect("/");
 }
 

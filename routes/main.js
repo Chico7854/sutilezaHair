@@ -1,9 +1,11 @@
 import express from "express"
 
+import * as mainController from "../controllers/main.js";
+
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.render("index");
-});
+router.get("/", mainController.getIndex);
+
+router.get("/agenda-adm", mainController.getAgendaAdm);
 
 export default router;
