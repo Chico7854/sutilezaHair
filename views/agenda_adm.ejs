@@ -54,48 +54,48 @@
 
 <!-- Popup Novo Horário -->
 <div id="popupNovoHorario" class="popup-overlay">
-    <div class="popup-box">
+    <form class="popup-box" action="criar-horario" method="post">
 
         <h2>Novo Horário</h2>
 
         <div style="display:flex; flex-direction:column; gap:14px;">
 
-            <label>Data
-                <input type="date">
+            <label for="data">Data
+                <input type="date" name="data">
             </label>
 
-            <label>Horário
-                <input type="time">
+            <label for="horas">Horário
+                <input type="time" name="horas">
             </label>
 
-            <label>Duração
-                <input type="text" placeholder="ex: 1h, 30m">
+            <label for="duracao">Duração
+                <input type="text" placeholder="ex: 50 (Em minutos)" name="duracao">
             </label>
 
-            <label>Cliente
-                <input type="text" placeholder="Nome do Cliente">
+            <label for="nomeCliente">Cliente
+                <input type="text" placeholder="Nome do Cliente" name="nomeCliente">
             </label>
 
-            <label>Atendente
-                <input type="text" placeholder="Nome do Atendente">
+            <label for="nomeAtendente">Atendente
+                <input type="text" placeholder="Nome do Atendente" name="nomeAtendente">
             </label>
 
-            <label>Descrição / Serviço
-                <input type="text" placeholder="Ex: Corte Feminino">
+            <label for="descricao">Descrição / Serviço
+                <input type="text" placeholder="Ex: Corte Feminino" name="descricao">
             </label>
 
-            <label>Pagamento
-                <input type="text" placeholder="PIX, Cartão, Dinheiro...">
+            <label for="pagamento">Pagamento
+                <input type="text" placeholder="PIX, Cartão, Dinheiro..." name="pagamento">
             </label>
 
         </div>
 
         <div class="popup-actions">
             <button id="popupNovoHorarioFechar" class="btn-login-nav" style="flex:1;">Cancelar</button>
-            <button class="btn" style="flex:1;">Salvar</button>
+            <button class="btn" style="flex:1;" type="submit">Salvar</button>
         </div>
 
-    </div>
+    </form>
 </div>
 
             <%- include("./includes/footer.ejs") %>
