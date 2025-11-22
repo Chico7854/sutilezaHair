@@ -13,8 +13,6 @@
                         <div class="filters">
                             <input type="date" id="dataSelecionada">
                             <button class="btn" id="btnNovoHorario"><i class="fa-solid fa-plus"></i>&nbsp;Novo Horário</button>
-                            <button class="btn" id="btnExportar"><i
-                                    class="fa-solid fa-file-export"></i>&nbsp;Exportar</button>
                         </div>
                     </div>
 
@@ -49,48 +47,48 @@
 
 <!-- Popup Novo Horário -->
 <div id="popupNovoHorario" class="popup-overlay">
-    <form class="popup-box" action="/adm/criar-horario" method="post">
+    <div class="popup-box">
 
         <h2>Novo Horário</h2>
 
         <div style="display:flex; flex-direction:column; gap:14px;">
 
             <label for="data">Data
-                <input type="date" name="data">
+                <input type="date" name="data" id="data">
             </label>
 
             <label for="horas">Horário
-                <input type="time" name="horas">
+                <input type="time" name="horas" id="horas">
             </label>
 
             <label for="duracao">Duração
-                <input type="text" placeholder="ex: 50 (Em minutos)" name="duracao">
+                <input type="text" placeholder="ex: 50 (Em minutos)" name="duracao" id="duracao">
             </label>
 
             <label for="nomeCliente">Cliente
-                <input type="text" placeholder="Nome do Cliente" name="nomeCliente">
+                <input type="text" placeholder="Nome do Cliente" name="nomeCliente" id="nomeCliente">
             </label>
 
             <label for="nomeAtendente">Atendente
-                <input type="text" placeholder="Nome do Atendente" name="nomeAtendente">
+                <input type="text" placeholder="Nome do Atendente" name="nomeAtendente" id="nomeAtendente">
             </label>
 
             <label for="descricao">Descrição / Serviço
-                <input type="text" placeholder="Ex: Corte Feminino" name="descricao">
+                <input type="text" placeholder="Ex: Corte Feminino" name="descricao" id="descricao">
             </label>
 
             <label for="pagamento">Pagamento
-                <input type="text" placeholder="PIX, Cartão, Dinheiro..." name="pagamento">
+                <input type="text" placeholder="PIX, Cartão, Dinheiro..." name="pagamento" id="pagamento">
             </label>
 
         </div>
 
         <div class="popup-actions">
             <button id="popupNovoHorarioFechar" class="btn-login-nav" style="flex:1;">Cancelar</button>
-            <button class="btn" style="flex:1;" type="submit">Salvar</button>
+            <button class="btn" style="flex:1;" id="popupNovoHorarioSalvar">Salvar</button>
         </div>
 
-    </form>
+    </div>
 </div>
 
             <%- include("./includes/footer.ejs") %>

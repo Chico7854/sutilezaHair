@@ -1,3 +1,15 @@
+const popupNovoHorario = document.getElementById("popupNovoHorario");
+const popupNovoHorarioFechar = document.getElementById(
+    "popupNovoHorarioFechar"
+);
+const btnNovoHorario = document.getElementById("btnNovoHorario");
+const popupNovoHorarioSalvar = document.getElementById(
+    "popupNovoHorarioSalvar"
+);
+
+let editarHorario = false;
+let id = null;
+
 const horarios = [
     "08:00",
     "08:30",
@@ -30,6 +42,7 @@ const horarios = [
     "22:00",
 ];
 
+//TODO: calculo do horario inicio e final esta errado, 10h00 era pra ser 1000 mas esta apenas 10
 const carregarAgendamentos = async () => {
     try {
         const res = await fetch("/adm/horarios");
@@ -37,6 +50,17 @@ const carregarAgendamentos = async () => {
 
         agendamentos.forEach((a) => {
             a.data = new Date(a.data);
+            
+            const ano = a.data.getFullYear();
+            const mes = String((a.data.getMonth() + 1)).padStart(2, "0");
+            const dia = String(a.data.getDate()).padStart(2, "0");
+
+            a.diaISO = `${ano}-${mes}-${dia}`;
+
+            a.horarioInicioISO = a.data.toLocaleTimeString("pt-BR", {
+                hour: "2-digit",
+                minute: "2-digit"
+            });
             a.dia = a.data.getDay();
 
             let horaInicio = a.data.getHours();
@@ -87,6 +111,8 @@ async function renderTabela() {
 
             if (ag) {
                 td.dataset.id = ag._id;
+                td.dataset.diaISO = ag.diaISO;
+                td.dataset.horarioInicio = ag.horarioInicioISO;
                 td.dataset.cliente = ag.nomeCliente;
                 td.dataset.profissional = ag.nomeAtendente;
                 td.dataset.servico = ag.descricao;
@@ -201,11 +227,29 @@ function openPopover(td, ev, pin = false) {
     if (btnEditar) {
         btnEditar.onclick = () => {
             if (!popoverAnchor) return;
-            // simulação — substituir pela sua lógica de edição
-            alert(
-                `Editar (simulação) — ${popoverAnchor.dataset.servico || ""}`
+            
+            if (popupNovoHorario.classList) popupNovoHorario.classList.add("open");
+            popupNovoHorario.style.display = "flex";
+            popupNovoHorario.setAttribute("aria-hidden", "false");
+
+            document.getElementById("data").value = td.dataset.diaISO;
+            document.getElementById("horas").value = td.dataset.horarioInicio;
+            document.getElementById("duracao").value = td.dataset.duracao;
+            document.getElementById("nomeCliente").value = td.dataset.cliente;
+            document.getElementById("nomeAtendente").value = td.dataset.profissional;
+            document.getElementById("descricao").value = td.dataset.servico;
+            document.getElementById("pagamento").value = td.dataset.pagamento;
+
+            closePopover();
+
+            // foco no primeiro input (se existir)
+            const firstInput = popupNovoHorario.querySelector(
+                "input,select,textarea,button"
             );
-            // não fecha automaticamente; depende da sua UX
+            if (firstInput) firstInput.focus();
+
+            editarHorario = true;
+            id = td.dataset.id;
         };
     }
 
@@ -227,7 +271,7 @@ function openPopover(td, ev, pin = false) {
     }
 }
 
-function closePopover(forceClose) {
+function closePopover(forceClose = true) {
     if (!forceClose && popoverPinned) return;
     popover.style.display = "none";
     popoverPinned = false;
@@ -267,41 +311,7 @@ if (agendaBody) {
     });
 }
 
-// Exportação simples (CSV)
-
-const btnExportar = document.getElementById("btnExportar");
-if (btnExportar) {
-    btnExportar.addEventListener("click", () => {
-        const linhas = ["Dia,Hora,Status,Cliente,Profissional,Serviço,Duração"];
-        agendamentos.forEach((a) => {
-            linhas.push(
-                `${a.dia},${a.hora},${a.status},${a.cliente},${a.profissional},${a.servico},${a.duracao}`
-            );
-        });
-        const blob = new Blob([linhas.join("\n")], {
-            type: "text/csv;charset=utf-8;",
-        });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "agenda_sutileza.csv";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-    });
-}
-
 // Popup Novo Horário
-
-const popupNovoHorario = document.getElementById("popupNovoHorario");
-const popupNovoHorarioFechar = document.getElementById(
-    "popupNovoHorarioFechar"
-);
-const btnNovoHorario = document.getElementById("btnNovoHorario");
-const popupNovoHorarioSalvar = document.getElementById(
-    "popupNovoHorarioSalvar"
-); // pode ser undefined no markup atual
 
 if (btnNovoHorario && popupNovoHorario) {
     btnNovoHorario.addEventListener("click", (ev) => {
@@ -316,6 +326,8 @@ if (btnNovoHorario && popupNovoHorario) {
             "input,select,textarea,button"
         );
         if (firstInput) firstInput.focus();
+
+        editarHorario = false;
     });
 }
 
@@ -354,22 +366,50 @@ if (popupNovoHorario) {
     });
 }
 
-// Salvar - comportamento simulado (se houver botão com id popupNovoHorarioSalvar)
-if (popupNovoHorarioSalvar && popupNovoHorario) {
-    popupNovoHorarioSalvar.addEventListener("click", (ev) => {
-        ev.preventDefault();
-        const data =
-            popupNovoHorario.querySelector("#novo_horario_data")?.value || "";
-        const hora =
-            popupNovoHorario.querySelector("#novo_horario_hora")?.value || "";
-        const cliente =
-            popupNovoHorario.querySelector("#novo_horario_cliente")?.value ||
-            "";
+// Salvar
+const agendarHorario = async () => {
+    const data = document.getElementById("data").value;
+    const horas = document.getElementById("horas").value;
+    const duracao = document.getElementById("duracao").value;
+    const nomeCliente = document.getElementById("nomeCliente").value;
+    const nomeAtendente = document.getElementById("nomeAtendente").value;
+    const descricao = document.getElementById("descricao").value;
+    const pagamento = document.getElementById("pagamento").value;
+    
+    if (editarHorario) {
+        console.log("Here");
+        await fetch("/adm/cancelar-horario", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: id
+            })
+        });
+    }
 
-        // fecha
-        if (popupNovoHorario.classList)
-            popupNovoHorario.classList.remove("open");
-        popupNovoHorario.style.display = "none";
-        popupNovoHorario.setAttribute("aria-hidden", "true");
+    return fetch("/adm/criar-horario", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            data: data,
+            horas: horas,
+            duracao: duracao,
+            nomeCliente: nomeCliente,
+            nomeAtendente: nomeAtendente,
+            descricao: descricao,
+            pagamento: pagamento
+        })
+    });
+}
+
+if (popupNovoHorarioSalvar && popupNovoHorario) {
+    popupNovoHorarioSalvar.addEventListener("click", async (ev) => {
+        ev.preventDefault();
+        await agendarHorario();
+        window.location.href = "/adm/agenda-adm";
     });
 }

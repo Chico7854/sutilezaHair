@@ -21,7 +21,7 @@ export const postAPICriarHorario = async (req, res) => {
 
         await horario.save();
 
-        return res.redirect("agenda-adm");
+        return res.sendStatus(201);
     } catch (err) {
         console.log(err);
     }
@@ -39,6 +39,7 @@ export const getAPIHorarios = async (req, res) => {
 
 export const deleteAPICancelarHorario = async (req, res) => {
     try {
+        console.log("Here");
         const { id } = req.body;
 
         await Horario.findByIdAndDelete(id);
