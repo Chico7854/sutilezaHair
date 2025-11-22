@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.get("/", mainController.getIndex);
 
+router.get("/atualizacoes", mainController.getAtualizacoes);
+
 export default router;

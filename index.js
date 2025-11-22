@@ -10,6 +10,7 @@ import { getDirname } from "./utils/pathHelpers.js";
 import mainRoutes from "./routes/main.js"
 import authRoutes from "./routes/auth.js"
 import admRoutes from "./routes/adm.js";
+import clienteRoutes from "./routes/cliente.js";
 
 const __dirname = getDirname(import.meta.url)
 const MONGODB_URI = "mongodb+srv://lacus7854:dl2RZ1UdK4Xd%249N@cluster0.rkwh7xn.mongodb.net/SutilezaHair"
@@ -47,6 +48,7 @@ app.use((req, res, next) => {
 app.use(mainRoutes);
 app.use(authRoutes);
 app.use("/adm", admRoutes);
+app.use(clienteRoutes);
 
 mongoose.connect(MONGODB_URI)
     .then(() => {

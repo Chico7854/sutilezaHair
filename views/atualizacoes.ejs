@@ -1,0 +1,53 @@
+<%- include("./includes/head.ejs") %>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/atualizacoes.css">
+    <script src="/js/atualizacoes.js" defer></script>
+    <title>Atualizações</title>
+    </head>
+
+    <body>
+        <%- include("./includes/navigation.ejs") %>
+            <main>
+                <section class="updates">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Atualizações</h2>
+                            <p>Promoções e avisos de horários especiais.</p>
+                        </div>
+
+                        <div style="margin-bottom:25px; display:flex; flex-wrap:wrap; gap:15px;">
+                            <button type="button" class="btn" id="btnNovaAtualizacao">Novo Horário / Promoção</button>
+                        </div>
+
+                        <div class="services-grid" id="updatesGrid"></div>
+                    </div>
+                </section>
+
+                <!-- Modal (popup) -->
+                <div class="modal-overlay" id="modalAtualizacao" aria-hidden="true">
+                    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+                        <button type="button" class="modal-close" id="btnFecharModal"
+                            aria-label="Fechar">&times;</button>
+                        <h3 id="modalTitulo">Nova Atualização</h3>
+                        <form id="formModalAtualizacao" action="/adm/criar-atualizacao" method="post">
+                            <div class="modal-group">
+                                <label for="modalTituloInput">Título</label>
+                                <input type="text" id="modalTituloInput" name="titulo" required
+                                    placeholder="Ex: Semana da Hidratação">
+                            </div>
+                            <div class="modal-group">
+                                <label for="modalDescricaoInput">Descrição</label>
+                                <textarea id="modalDescricaoInput" name="descricao" rows="4" required
+                                    placeholder="Detalhes da promoção ou aviso"></textarea>
+                            </div>
+                            <div class="modal-actions">
+                                <button type="submit" class="btn">Enviar</button>
+                                <button type="button" class="btn btn-cancelar-modal"
+                                    id="btnCancelarModal">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+            <%- include("./includes/footer.ejs") %>
+    </body>

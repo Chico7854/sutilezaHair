@@ -1,7 +1,8 @@
-import Horario from "../models/horario.js"
+import Horario from "../models/horario.js";
+import Atualizacao from "../models/atualizacao.js";
 
 export const getAgendaAdm = (req, res) => {
-    res.render("agenda_adm.ejs");
+    return res.render("agenda_adm.ejs");
 }
 
 export const postAPICriarHorario = async (req, res) => {
@@ -45,6 +46,33 @@ export const deleteAPICancelarHorario = async (req, res) => {
         await Horario.findByIdAndDelete(id);
 
         return res.sendStatus(200);
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+export const getAPIGetAtualizacoes = async (req, res) => {
+    try {
+        const atualizacoes = await Atualizacao.find();
+
+        return res.json(atualizacoes);
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+export const postAPICriarAtualizacao = async (req, res) => {
+    try {
+        const { titulo, descricao } = req.body;
+
+        const atualizacao = new Atualizacao({
+            titulo: titulo,
+            descricao: descricao
+        });
+
+        atualizacao.save();
+
+        return res.redirect("/atualizacoes");
     } catch(err) {
         console.log(err);
     }

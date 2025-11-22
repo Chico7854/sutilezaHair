@@ -1,0 +1,172 @@
+/* Seção de Atualizações */
+.updates {
+    padding: 80px 0;
+    background-color: white;
+}
+
+/* Grid de cards já reutiliza .services-grid do main.css */
+
+/* Botões dentro dos cards */
+.update-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.update-actions .btn {
+    padding: 8px 18px;
+    font-size: 0.75rem;
+    border-radius: 22px;
+    line-height: 1.2;
+    flex: 1 1 auto;
+    text-align: center;
+    box-shadow: none;
+}
+
+.update-actions .btn[data-action="editar"] {
+    background: linear-gradient(135deg, #b08d57, #d4af7a);
+}
+.update-actions .btn[data-action="editar"]:hover {
+    background: linear-gradient(135deg, #d4af7a, #b08d57);
+}
+
+.update-actions .btn[data-action="excluir"] {
+    background: linear-gradient(135deg, #b03939, #d76e6e);
+}
+.update-actions .btn[data-action="excluir"]:hover {
+    background: linear-gradient(135deg, #d76e6e, #b03939);
+}
+
+@media (max-width: 480px) {
+    .update-actions {
+        flex-direction: column;
+    }
+    .update-actions .btn {
+        flex: 1 1 100%;
+    }
+}
+
+/* ================= Modal ================= */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal {
+    width: 100%;
+    max-width: 520px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 30px 32px;
+    position: relative;
+    box-shadow: 0 10px 35px rgba(0,0,0,.25);
+    animation: modalFade .35s ease;
+}
+
+@keyframes modalFade {
+    from { transform: translateY(25px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal h3 {
+    margin: 0 0 18px;
+    font-size: 1.4rem;
+    color: #b08d57;
+}
+
+.modal-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.modal-group label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: .6px;
+    color: #6d5637;
+}
+
+.modal-group input,
+.modal-group textarea {
+    border: 1px solid #d8c7b2;
+    background: #fdfbf8;
+    padding: 11px 13px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    resize: vertical;
+    transition: border-color .25s, box-shadow .25s;
+    font-family: inherit;
+}
+
+.modal-group input:focus,
+.modal-group textarea:focus {
+    outline: none;
+    border-color: #b08d57;
+    box-shadow: 0 0 0 3px rgba(176,141,87,.25);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+.btn-cancelar-modal {
+    background: transparent;
+    color: #b08d57;
+    border: 2px solid #b08d57;
+}
+.btn-cancelar-modal:hover {
+    background: #b08d57;
+    color: #fff;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    color: #b08d57;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: transform .25s;
+}
+.modal-close:hover {
+    transform: scale(1.2);
+}
+
+.section-title {
+    margin-top: 20px;
+}
+
+/* Responsivo modal */
+@media (max-width: 560px) {
+    .modal {
+        padding: 24px 22px 28px;
+    }
+    .modal h3 {
+        font-size: 1.2rem;
+        margin-bottom: 14px;
+    }
+}

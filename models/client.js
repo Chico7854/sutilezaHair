@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const clienteShecma = new Schema({
+const clienteSchema = new Schema({
     nome: {
         type: String,
         required: true
@@ -27,4 +27,4 @@ const clienteShecma = new Schema({
     }
 });
 
-export default mongoose.model("Cliente", clienteShecma);
+export default mongoose.model("Cliente", clienteSchema);

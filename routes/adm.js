@@ -12,4 +12,8 @@ router.get("/horarios", admController.getAPIHorarios);
 
 router.delete("/cancelar-horario", admController.deleteAPICancelarHorario);
 
+router.get("/get-atualizacoes", admController.getAPIGetAtualizacoes);
+
+router.post("/criar-atualizacao", admController.postAPICriarAtualizacao);
+
 export default router;
