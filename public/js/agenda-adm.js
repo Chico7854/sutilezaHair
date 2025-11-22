@@ -1,17 +1,3 @@
-const carregarHorarios = async () => {
-    try {
-        const res = await fetch("/api/horarios");
-        const horarios = await res.json();
-
-        return console.log(horarios);
-
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-carregarHorarios();
-
 const horarios = [
     "08:00",
     "08:30",
@@ -34,214 +20,53 @@ const horarios = [
     "17:00",
     "17:30",
     "18:00",
+    "18:30",
+    "19:00",
+    "19:30",
+    "20:00",
+    "20:30",
+    "21:00",
+    "21:30",
+    "22:00",
 ];
 
-// Dias índice: 1=Segunda . 6=Sábado
-// status: livre | ocupado | bloqueado
-const agendamentos = [
-    {
-        dia: 1,
-        hora: "08:30",
-        cliente: "Marina Silva",
-        profissional: "Paula",
-        servico: "Corte Feminino",
-        duracao: "45m",
-        status: "ocupado",
-    },
-    {
-        dia: 1,
-        hora: "10:00",
-        cliente: "Carlos Oliveira",
-        profissional: "Rafa",
-        servico: "Coloração",
-        duracao: "1h30",
-        status: "ocupado",
-    },
-    {
-        dia: 1,
-        hora: "14:00",
-        cliente: "--",
-        profissional: "Equipe",
-        servico: "Intervalo",
-        duracao: "30m",
-        status: "bloqueado",
-    },
-    {
-        dia: 2,
-        hora: "09:00",
-        cliente: "Ana Mendes",
-        profissional: "Paula",
-        servico: "Hidratação",
-        duracao: "1h",
-        status: "ocupado",
-    },
-    {
-        dia: 2,
-        hora: "15:30",
-        cliente: "João Souza",
-        profissional: "Rafa",
-        servico: "Corte Masculino",
-        duracao: "30m",
-        status: "ocupado",
-    },
-    {
-        dia: 3,
-        hora: "11:00",
-        cliente: "Beatriz Lima",
-        profissional: "Carla",
-        servico: "Luzes",
-        duracao: "2h",
-        status: "ocupado",
-    },
-    {
-        dia: 3,
-        hora: "16:30",
-        cliente: "--",
-        profissional: "Equipe",
-        servico: "Reunião",
-        duracao: "30m",
-        status: "bloqueado",
-    },
-    {
-        dia: 4,
-        hora: "08:00",
-        cliente: "Patrícia Reis",
-        profissional: "Carla",
-        servico: "Escova",
-        duracao: "45m",
-        status: "ocupado",
-    },
-    {
-        dia: 4,
-        hora: "13:30",
-        cliente: "Renato Gomes",
-        profissional: "Rafa",
-        servico: "Barba + Corte",
-        duracao: "1h",
-        status: "ocupado",
-    },
-    {
-        dia: 5,
-        hora: "10:30",
-        cliente: "Luciana Prado",
-        profissional: "Paula",
-        servico: "Botox Capilar",
-        duracao: "2h",
-        status: "ocupado",
-    },
-    {
-        dia: 5,
-        hora: "17:00",
-        cliente: "--",
-        profissional: "Equipe",
-        servico: "Manutenção",
-        duracao: "1h",
-        status: "bloqueado",
-    },
-    {
-        dia: 6,
-        hora: "09:30",
-        cliente: "Sofia Martins",
-        profissional: "Carla",
-        servico: "Penteado",
-        duracao: "1h15",
-        status: "ocupado",
-    },
-    {
-        dia: 6,
-        hora: "11:30",
-        cliente: "Marcos Vinicius",
-        profissional: "Rafa",
-        servico: "Corte Masculino",
-        duracao: "30m",
-        status: "ocupado",
-    },
-    {
-        dia: 6,
-        hora: "15:00",
-        cliente: "Fernanda Rocha",
-        profissional: "Paula",
-        servico: "Tratamento Nutrição",
-        duracao: "1h",
-        status: "ocupado",
-    },
-];
+const carregarAgendamentos = async () => {
+    try {
+        const res = await fetch("/api/horarios");
+        const agendamentos = await res.json();
 
-/*******************
- * Popula filtros (profissionais / serviços)
- *******************/
-const profissionais = [
-    ...new Set(
-        agendamentos
-            .filter(
-                (a) =>
-                    a.profissional &&
-                    a.profissional !== "Equipe" &&
-                    a.cliente !== "--"
-            )
-            .map((a) => a.profissional)
-    ),
-].sort();
+        agendamentos.forEach((a) => {
+            a.data = new Date(a.data);
+            a.dia = a.data.getDay();
 
-const servicos = [
-    ...new Set(
-        agendamentos
-            .filter(
-                (a) =>
-                    a.servico &&
-                    !/Intervalo|Reunião|Manutenção/i.test(a.servico)
-            )
-            .map((a) => a.servico)
-    ),
-].sort();
+            let horaInicio = a.data.getHours();
+            let minutosInicio = a.data.getMinutes();
+            let horaFinal = horaInicio + ((a.duracao + minutosInicio) / 60);
+            let minutosFinal = (a.duracao + minutosInicio) % 60;
 
-const filtroProfissional = document.getElementById("filtroProfissional");
-const filtroServico = document.getElementById("filtroServico");
+            a.horarioInicio = parseInt(`${horaInicio} + ${minutosInicio}`);
+            a.horarioFinal = parseInt(`${horaFinal} + ${minutosFinal}`);
+        });
 
-if (filtroProfissional && filtroServico) {
-    profissionais.forEach((p) => {
-        const opt = document.createElement("option");
-        opt.value = p;
-        opt.textContent = p;
-        filtroProfissional.appendChild(opt);
-    });
+        return agendamentos;
 
-    servicos.forEach((s) => {
-        const opt = document.createElement("option");
-        opt.value = s;
-        opt.textContent = s;
-        filtroServico.appendChild(opt);
-    });
+    } catch (err) {
+        console.log(err);
+    }
 }
 
-/*******************
- * Renderização da tabela
- *******************/
+// Renderização da tabela
 const agendaBody = document.getElementById("agendaBody");
 
-function getAgendamento(dia, hora) {
-    return agendamentos.find((a) => a.dia === dia && a.hora === hora);
+function getAgendamento(dia, hora, agendamentos) {
+    hora = parseInt(hora.replace(";", ""));
+    return agendamentos.find((a) => (a.dia === dia) && (a.horarioInicio <= hora && a.horarioFinal >= hora));
 }
 
-function passaFiltro(ag) {
-    if (!ag) return true;
-    if (
-        filtroProfissional &&
-        filtroProfissional.value &&
-        ag.profissional !== filtroProfissional.value
-    )
-        return false;
-    if (
-        filtroServico &&
-        filtroServico.value &&
-        ag.servico !== filtroServico.value
-    )
-        return false;
-    return true;
-}
-
-function renderTabela() {
+async function renderTabela() {
     if (!agendaBody) return;
+    const agendamentos = await carregarAgendamentos();
+
     agendaBody.innerHTML = "";
     horarios.forEach((hora) => {
         const tr = document.createElement("tr");
@@ -253,40 +78,28 @@ function renderTabela() {
         timeTd.setAttribute("aria-label", `Horário ${hora}`);
         tr.appendChild(timeTd);
 
-        for (let dia = 1; dia <= 6; dia++) {
-            const ag = getAgendamento(dia, hora);
+        for (let dia = 0; dia <= 6; dia++) {
+            const ag = getAgendamento(dia, hora, agendamentos);
             const td = document.createElement("td");
             td.tabIndex = 0; // acessível
             td.dataset.hora = hora;
             td.dataset.dia = dia;
 
             if (ag) {
-                td.dataset.cliente = ag.cliente;
-                td.dataset.profissional = ag.profissional;
-                td.dataset.servico = ag.servico;
+                td.dataset.cliente = ag.nomeCliente;
+                td.dataset.profissional = ag.nomeAtendente;
+                td.dataset.servico = ag.descricao;
                 td.dataset.duracao = ag.duracao;
-                td.dataset.status = ag.status;
+                td.dataset.pagamento = ag.pagamento;
+                td.dataset.status = "ocupado"
 
-                if (!passaFiltro(ag)) {
-                    td.className = "slot-livre";
-                    td.innerHTML = "<span style='opacity:.25'>Livre</span>";
-                } else {
-                    if (ag.status === "ocupado") {
-                        td.classList.add("slot-ocupado");
-                        td.innerHTML = `<div style="font-size:.65rem;line-height:1.15">
-                    <strong>${ag.servico}</strong><br>
-                    <span style="opacity:.75">${ag.profissional}</span>
-                </div>`;
-                    } else if (ag.status === "bloqueado") {
-                        td.classList.add("slot-bloqueado");
-                        td.innerHTML = `<span style="font-size:.6rem;opacity:.7">${ag.servico}</span>`;
-                        td.setAttribute("aria-disabled", "true");
-                    }
-                }
+                td.classList.add("slot-ocupado");
+                td.innerHTML = `<div style="font-size:.65rem;line-height:1.15">
+                                    <strong>${ag.nomeCliente}</strong><br>
+                                </div>`;
             } else {
                 td.className = "slot-livre";
-                td.innerHTML =
-                    "<span style='font-size:.65rem;opacity:.55'>Livre</span>";
+                td.innerHTML = "<span style='font-size:.65rem;opacity:.55'>Livre</span>";
                 td.dataset.status = "livre";
             }
 
@@ -297,19 +110,10 @@ function renderTabela() {
     });
 }
 
-if (filtroProfissional)
-    filtroProfissional.addEventListener("change", renderTabela);
-if (filtroServico) filtroServico.addEventListener("change", renderTabela);
-
 renderTabela();
 
-/*******************
- * Popover (corrigido e robusto)
- *
- * - cria um popover simples dinamicamente
- * - openPopover(td, event, pin) e closePopover(pinClose)
- * - mantém estado: popoverPinned, popoverAnchor
- *******************/
+// Popover
+
 let popoverPinned = false;
 let popoverAnchor = null;
 
@@ -332,7 +136,6 @@ const popover = (function createPopoverEl() {
     <div id="popoverContent" style="margin-bottom:8px;"></div>
     <div style="display:flex;gap:8px;justify-content:flex-end;">
       <button id="popoverEditar" class="btn" style="padding:6px 8px;font-size:.85rem">Editar</button>
-      <button id="popoverMover" class="btn" style="padding:6px 8px;font-size:.85rem">Mover</button>
       <button id="popoverCancelar" class="btn-login-nav" style="padding:6px 8px;font-size:.85rem">Cancelar</button>
     </div>
   `;
@@ -355,6 +158,7 @@ const popover = (function createPopoverEl() {
 
 function openPopover(td, ev, pin = false) {
     if (!td) return;
+    if (td.dataset.status !== "ocupado") return closePopover(true);
     popoverAnchor = td;
     popoverPinned = !!pin;
 
@@ -364,17 +168,8 @@ function openPopover(td, ev, pin = false) {
     if (status === "ocupado") {
         content.innerHTML = `
       <div><strong>${td.dataset.servico || "Serviço"}</strong></div>
-      <div style="opacity:.8">${td.dataset.profissional || ""} • ${
-            td.dataset.duracao || ""
-        }</div>
-      <div style="font-size:.85rem;margin-top:6px;color:#444">${
-          td.dataset.cliente || ""
-      }</div>
-    `;
-    } else if (status === "bloqueado") {
-        content.innerHTML = `<div><strong>${
-            td.dataset.servico || "Bloqueado"
-        }</strong></div>`;
+      <div style="opacity:.8">${td.dataset.profissional || ""}</div>
+      <div style="font-size:.85rem;margin-top:6px;color:#444">${td.dataset.duracao} minutos</div>`;
     } else {
         content.innerHTML = `<div><strong>Horário livre</strong></div>`;
     }
@@ -399,14 +194,7 @@ function openPopover(td, ev, pin = false) {
 
     // atualiza botões
     const btnEditar = document.getElementById("popoverEditar");
-    const btnMover = document.getElementById("popoverMover");
     const btnCancelar = document.getElementById("popoverCancelar");
-
-    // habilita/desabilita botões conforme status
-    if (btnEditar)
-        btnEditar.disabled = status === "livre" || status === "bloqueado";
-    if (btnMover) btnMover.disabled = status !== "ocupado";
-    if (btnCancelar) btnCancelar.disabled = status !== "ocupado";
 
     // attach handlers (remoção segura antes)
     if (btnEditar) {
@@ -420,36 +208,9 @@ function openPopover(td, ev, pin = false) {
         };
     }
 
-    if (btnMover) {
-        btnMover.onclick = () => {
-            if (!popoverAnchor) return;
-            // simulação — lógica para mover agendamento
-            alert(`Mover (simulação) — ${popoverAnchor.dataset.servico || ""}`);
-            closePopover(true);
-        };
-    }
-
     if (btnCancelar) {
         btnCancelar.onclick = () => {
             if (!popoverAnchor) return;
-            const statusLocal = popoverAnchor.dataset.status;
-            if (statusLocal !== "ocupado") {
-                alert("Nada para cancelar.");
-                return;
-            }
-            if (confirm("Cancelar este agendamento?")) {
-                // transforma visualmente em livre (simulação)
-                popoverAnchor.className = "slot-livre";
-                popoverAnchor.innerHTML =
-                    "<span style='font-size:.65rem;opacity:.55'>Livre</span>";
-                popoverAnchor.dataset.status = "livre";
-                delete popoverAnchor.dataset.cliente;
-                delete popoverAnchor.dataset.servico;
-                delete popoverAnchor.dataset.profissional;
-                delete popoverAnchor.dataset.duracao;
-                closePopover(true);
-                alert("Agendamento cancelado (simulação).");
-            }
         };
     }
 }
@@ -461,9 +222,8 @@ function closePopover(forceClose) {
     popoverAnchor = null;
 }
 
-/*******************
- * Interações com a tabela: clique / foco
- *******************/
+// Interações com a tabela: clique / foco
+
 if (agendaBody) {
     agendaBody.addEventListener("click", (e) => {
         const td = e.target.closest("td");
@@ -494,9 +254,8 @@ if (agendaBody) {
     });
 }
 
-/*******************
- * Exportação simples (CSV)
- *******************/
+// Exportação simples (CSV)
+
 const btnExportar = document.getElementById("btnExportar");
 if (btnExportar) {
     btnExportar.addEventListener("click", () => {
@@ -520,10 +279,8 @@ if (btnExportar) {
     });
 }
 
-/*******************
- * Popup Novo Horário (robusto)
- * - usa o popup já presente no EJS, mas protege casos onde IDs não existem
- *******************/
+// Popup Novo Horário
+
 const popupNovoHorario = document.getElementById("popupNovoHorario");
 const popupNovoHorarioFechar = document.getElementById(
     "popupNovoHorarioFechar"

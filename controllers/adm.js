@@ -1,7 +1,7 @@
 import Horario from "../models/horario.js"
 
 export const getAgendaAdm = (req, res) => {
-    res. render("agenda_adm.ejs");
+    res.render("agenda_adm.ejs");
 }
 
 export const postCriarHorario = async (req, res) => {
