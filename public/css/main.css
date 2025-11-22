@@ -521,6 +521,8 @@ footer {
     
     .calendar-table {
         min-width: 600px;
+        width: fit-content;
+        margin: 0 auto;
     }
 }
 

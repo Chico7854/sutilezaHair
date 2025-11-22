@@ -1,3 +1,5 @@
+//TODO: Mostrar calendario de cada semana
+
 const popupNovoHorario = document.getElementById("popupNovoHorario");
 const popupNovoHorarioFechar = document.getElementById(
     "popupNovoHorarioFechar"

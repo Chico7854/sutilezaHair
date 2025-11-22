@@ -1,5 +1,7 @@
 <%- include("./includes/head.ejs") %>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="/css/agenda-adm.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/agenda.js" defer></script>
     <title>Sutileza Hair</title>
 </head>
 <body>
@@ -129,6 +131,7 @@
                     <thead>
                         <tr>
                             <th>Horário</th>
+                            <th>Domingo</th>
                             <th>Segunda</th>
                             <th>Terça</th>
                             <th>Quarta</th>
@@ -137,98 +140,8 @@
                             <th>Sábado</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="calendar-time">08:00</td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="calendar-time">08:30</td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="calendar-time">09:00</td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                        </tr>
-                        <tr>
-                            <td class="calendar-time">09:30</td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                        </tr>
-                        <tr>
-                            <td class="calendar-time">10:00</td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="calendar-time">10:30</td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="calendar-time">11:00</td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                            <td class="booked">Ocupado</td>
-                            <td class="booked">Ocupado</td>
-                        </tr>
-                        <tr>
-                            <td class="calendar-time">11:30</td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                        </tr>
-                        <tr>
-                            <td class="calendar-time">12:00</td>
-                            <td></td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="calendar-time">12:30</td>
-                            <td></td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                            <td class="booked">Ocupado</td>
-                            <td></td>
-                        </tr>
-                        <!-- Adicione mais horários conforme necessário -->
+                    <tbody id="agendaBody">
+                        <!-- Linhas geradas via JS -->
                     </tbody>
                 </table>
             </div>
