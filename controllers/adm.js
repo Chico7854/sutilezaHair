@@ -4,7 +4,7 @@ export const getAgendaAdm = (req, res) => {
     res.render("agenda_adm.ejs");
 }
 
-export const postCriarHorario = async (req, res) => {
+export const postAPICriarHorario = async (req, res) => {
     try {
         const { data, horas, duracao, nomeCliente, nomeAtendente, descricao, pagamento } = req.body;
 
@@ -21,7 +21,7 @@ export const postCriarHorario = async (req, res) => {
 
         await horario.save();
 
-        return res.redirect("/agenda-adm");
+        return res.redirect("agenda-adm");
     } catch (err) {
         console.log(err);
     }
@@ -32,6 +32,18 @@ export const getAPIHorarios = async (req, res) => {
         const listaHorarios = await Horario.find();
 
         return res.json(listaHorarios);
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+export const deleteAPICancelarHorario = async (req, res) => {
+    try {
+        const { id } = req.body;
+
+        await Horario.findByIdAndDelete(id);
+
+        return res.sendStatus(200);
     } catch(err) {
         console.log(err);
     }

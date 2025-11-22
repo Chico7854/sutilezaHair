@@ -32,7 +32,7 @@ const horarios = [
 
 const carregarAgendamentos = async () => {
     try {
-        const res = await fetch("/api/horarios");
+        const res = await fetch("/adm/horarios");
         const agendamentos = await res.json();
 
         agendamentos.forEach((a) => {
@@ -86,6 +86,7 @@ async function renderTabela() {
             td.dataset.dia = dia;
 
             if (ag) {
+                td.dataset.id = ag._id;
                 td.dataset.cliente = ag.nomeCliente;
                 td.dataset.profissional = ag.nomeAtendente;
                 td.dataset.servico = ag.descricao;
@@ -209,8 +210,19 @@ function openPopover(td, ev, pin = false) {
     }
 
     if (btnCancelar) {
-        btnCancelar.onclick = () => {
+        btnCancelar.onclick = async () => {
             if (!popoverAnchor) return;
+            await fetch("/adm/cancelar-horario", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: td.dataset.id
+                })
+            });
+
+            window.location.href = "/adm/agenda-adm";
         };
     }
 }
@@ -226,6 +238,7 @@ function closePopover(forceClose) {
 
 if (agendaBody) {
     agendaBody.addEventListener("click", (e) => {
+        e.preventDefault();
         const td = e.target.closest("td");
         if (!td || td.classList.contains("time-col")) return;
 

@@ -26,6 +26,7 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(session({
     secret: "secret",
@@ -45,7 +46,7 @@ app.use((req, res, next) => {
 
 app.use(mainRoutes);
 app.use(authRoutes);
-app.use(admRoutes);
+app.use("/adm", admRoutes);
 
 mongoose.connect(MONGODB_URI)
     .then(() => {

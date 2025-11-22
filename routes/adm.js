@@ -6,8 +6,10 @@ const router = Router();
 
 router.get("/agenda-adm", admController.getAgendaAdm);
 
-router.post("/criar-horario", admController.postCriarHorario);
+router.post("/criar-horario", admController.postAPICriarHorario);
 
-router.get("/api/horarios", admController.getAPIHorarios);
+router.get("/horarios", admController.getAPIHorarios);
+
+router.delete("/cancelar-horario", admController.deleteAPICancelarHorario);
 
 export default router;
