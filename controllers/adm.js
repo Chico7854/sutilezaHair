@@ -94,3 +94,14 @@ export const putAPIEditarAtualizacao = async (req, res) => {
         console.log(err);
     }
 }
+
+export const deleteAPIExcluirAtualizacao = async (req, res) => {
+    try {
+        const { id } = req.body;
+        await Atualizacao.findByIdAndDelete(id);
+
+        res.sendStatus(204);
+    } catch(err) {
+        console.log(err);
+    }
+}

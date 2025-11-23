@@ -18,4 +18,6 @@ router.post("/criar-atualizacao", admController.postAPICriarAtualizacao);
 
 router.put("/editar-atualizacao", admController.putAPIEditarAtualizacao);
 
+router.delete("/excluir-atualizacao", admController.deleteAPIExcluirAtualizacao);
+
 export default router;

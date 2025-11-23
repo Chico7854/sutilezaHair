@@ -1,4 +1,3 @@
-//TODO: Fazer editar e deletar atualizacao no backend
 //Deixar os botao de editar deletar e criar, em atualizacao apenas para o adm
 //Pagina do cliente
 
