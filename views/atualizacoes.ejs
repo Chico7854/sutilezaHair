@@ -7,6 +7,7 @@
 
     <body>
         <%- include("./includes/navigation.ejs") %>
+            <div id="userInfo" data-is-adm="<%= isAdm %>"></div>
             <main>
                 <section class="updates">
                     <div class="container">
@@ -14,11 +15,11 @@
                             <h2>Atualizações</h2>
                             <p>Promoções e avisos de horários especiais.</p>
                         </div>
-
-                        <div style="margin-bottom:25px; display:flex; flex-wrap:wrap; gap:15px;">
-                            <button type="button" class="btn" id="btnNovaAtualizacao">Novo Horário / Promoção</button>
-                        </div>
-
+                        <% if (isAdm) { %>
+                            <div style="margin-bottom:25px; display:flex; flex-wrap:wrap; gap:15px;">
+                                <button type="button" class="btn" id="btnNovaAtualizacao">Nova Atualização</button>
+                            </div>
+                        <% } %>
                         <div class="services-grid" id="updatesGrid"></div>
                     </div>
                 </section>
@@ -50,4 +51,3 @@
                 </div>
             </main>
             <%- include("./includes/footer.ejs") %>
-    </body>

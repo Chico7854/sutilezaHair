@@ -5,7 +5,6 @@ async function getAtualizacoes() {
 }
 
 async function excluirAtualizacao(id) {
-    console.log("Hi");
     await fetch("/adm/excluir-atualizacao", {
         method: "delete",
         headers: {
@@ -22,23 +21,34 @@ function createUpdateCard({ _id, titulo, descricao }) {
     const card = document.createElement('div');
     card.className = 'service-card';
     card.dataset.id = _id || '';
+    const isAdm = document.getElementById("userInfo").dataset.isAdm;
 
-    card.innerHTML = `
-        <div class="service-content">
-            <h3>${titulo}</h3>
-            <p>${descricao}</p>
-            <div class="update-actions">
-                <button type="button" class="btn" data-action="editar" data-id="${_id}">Editar</button>
-                <button id="delete-button" type="button" class="btn" data-action="excluir" data-id="${_id}">Excluir</button>
+    if (isAdm) {
+        card.innerHTML = `
+            <div class="service-content">
+                <h3>${titulo}</h3>
+                <p>${descricao}</p>
+                <div class="update-actions">
+                    <button type="button" class="btn" data-action="editar" data-id="${_id}">Editar</button>
+                    <button id="delete-button" type="button" class="btn" data-action="excluir" data-id="${_id}">Excluir</button>
+                </div>
             </div>
-        </div>
-    `;
+        `;
+    } else {
+        card.innerHTML = `
+            <div class="service-content">
+                <h3>${titulo}</h3>
+                <p>${descricao}</p>
+            </div>
+        `;
+    }
     return card;
 }
 
 // Renderiza todos os cards
 function renderUpdates(lista) {
     const grid = document.getElementById('updatesGrid');
+    const isAdm = document.getElementById("userInfo").dataset.isAdm;
     let card;
     let button;
     if (!grid) return;
@@ -46,8 +56,10 @@ function renderUpdates(lista) {
     lista.forEach(item => {
         card = createUpdateCard(item);
         grid.appendChild(card);
-        card.querySelector("button").onclick = () => abrirModal(true, item);
-        card.querySelector("#delete-button").onclick = () => excluirAtualizacao(item._id);
+        if (isAdm) {
+            card.querySelector("button").onclick = () => abrirModal(true, item);
+            card.querySelector("#delete-button").onclick = () => excluirAtualizacao(item._id);
+        }
     });
 }
 
