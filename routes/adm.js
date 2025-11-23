@@ -16,4 +16,6 @@ router.get("/get-atualizacoes", admController.getAPIGetAtualizacoes);
 
 router.post("/criar-atualizacao", admController.postAPICriarAtualizacao);
 
+router.put("/editar-atualizacao", admController.putAPIEditarAtualizacao);
+
 export default router;

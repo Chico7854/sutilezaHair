@@ -76,3 +76,21 @@ export const postAPICriarAtualizacao = async (req, res) => {
         console.log(err);
     }
 }
+
+export const putAPIEditarAtualizacao = async (req, res) => {
+    try {
+        const { id, titulo, descricao } = req.body;
+
+        await Atualizacao.findByIdAndUpdate(
+            id,
+            {
+                titulo: titulo,
+                descricao: descricao
+            }
+        );
+
+        res.sendStatus(204);
+    } catch(err) {
+        console.log(err);
+    }
+}
