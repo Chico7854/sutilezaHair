@@ -64,7 +64,6 @@ export const getAPIGetAtualizacoes = async (req, res) => {
 export const postAPICriarAtualizacao = async (req, res) => {
     try {
         const { titulo, descricao } = req.body;
-
         const atualizacao = new Atualizacao({
             titulo: titulo,
             descricao: descricao

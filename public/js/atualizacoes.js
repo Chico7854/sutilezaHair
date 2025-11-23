@@ -1,4 +1,4 @@
-const getAtualizacoes = async () => {
+async function getAtualizacoes() {
     const res = await fetch("/adm/get-atualizacoes");
     const atualizacoes = await res.json();
     return atualizacoes;
@@ -26,9 +26,15 @@ function createUpdateCard({ _id, titulo, descricao }) {
 // Renderiza todos os cards
 function renderUpdates(lista) {
     const grid = document.getElementById('updatesGrid');
+    let card;
+    let button;
     if (!grid) return;
     grid.innerHTML = '';
-    lista.forEach(item => grid.appendChild(createUpdateCard(item)));
+    lista.forEach(item => {
+        card = createUpdateCard(item);
+        grid.appendChild(card);
+        card.querySelector("button").onclick = () => abrirModal(true, item);
+    });
 }
 
 // ===== Modal =====
@@ -37,11 +43,22 @@ const formModal = document.getElementById('formModalAtualizacao');
 const tituloInput = document.getElementById('modalTituloInput');
 const descInput = document.getElementById('modalDescricaoInput');
 
-function abrirModal() {
+function abrirModal(editar = false, item = null) {
     if (!modalOverlay) return;
     modalOverlay.classList.add('active');
     modalOverlay.setAttribute('aria-hidden', 'false');
     tituloInput.focus();
+    modalOverlay.dataset.editar = false;
+    if (editar) {
+        modalOverlay.dataset.editar = true;
+        modalOverlay.dataset.id = item._id;
+
+        const titulo = modalOverlay.querySelector("#modalTituloInput");
+        const descricao = modalOverlay.querySelector("#modalDescricaoInput");
+
+        titulo.value = item.titulo;
+        descricao.value = item.descricao;
+    }
 }
 
 function fecharModal() {
@@ -58,7 +75,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const btnNova = document.getElementById('btnNovaAtualizacao');
     if (btnNova) {
-        btnNova.addEventListener('click', abrirModal);
+        btnNova.addEventListener('click', () => abrirModal());
     }
 
     const btnFechar = document.getElementById('btnFecharModal');
@@ -84,6 +101,41 @@ document.addEventListener('DOMContentLoaded', async () => {
             fecharModal();
         }
     });
+
+    formModal.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const obj = Object.fromEntries(new FormData(formModal));
+
+        console.log(modalOverlay.dataset.editar);
+        
+        if (modalOverlay.dataset.editar === "true") {
+            await fetch("/adm/editar-atualizacao", {
+                method: "put",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: modalOverlay.dataset.id,
+                    titulo: obj.titulo,
+                    descricao: obj.descricao
+                })
+            });
+        } else {
+            await fetch("/adm/criar-atualizacao", {
+                method:"post",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    titulo: obj.titulo,
+                    descricao: obj.descricao
+                })
+            })
+        }
+
+        window.location.href = "/atualizacoes";
+    })
 });
 
 // Exports (opcional)
