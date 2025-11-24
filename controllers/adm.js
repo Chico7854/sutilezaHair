@@ -1,5 +1,6 @@
 import Horario from "../models/horario.js";
 import Atualizacao from "../models/atualizacao.js";
+import Cliente from "../models/client.js";
 
 export const getAgendaAdm = (req, res) => {
     return res.render("agenda_adm.ejs");
@@ -101,6 +102,28 @@ export const deleteAPIExcluirAtualizacao = async (req, res) => {
         await Atualizacao.findByIdAndDelete(id);
 
         res.sendStatus(204);
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+export const getListas = (req, res) => {
+    return res.render("listas.ejs");
+}
+
+export const getAPIListaClientes = async (req, res) => {
+    try {
+        const listaClientes = await Cliente.find();
+        return res.json(listaClientes);
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+export const getAPIListaAdms = async (req, res) => {
+    try {
+        const listaAdms = await Cliente.find();
+        return res.json(listaAdms);
     } catch(err) {
         console.log(err);
     }

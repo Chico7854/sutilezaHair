@@ -1,0 +1,20 @@
+<%- include("./includes/head.ejs") %>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/listas.css">
+    <script src="/js/agendamentos_cliente.js" defer></script>
+    <title>Meus Agendamentos</title>
+</head>
+<body>
+    <%- include("./includes/navigation.ejs") %>
+
+    <main class="listas-main">
+        <div class="container">
+            <h1 class="page-title">Meus Agendamentos</h1>
+
+            <div class="cards-grid" id="agendamentos-container">
+                <!-- Cards serão criados pelo JS -->
+            </div>
+        </div>
+    </main>
+
+    <%- include("./includes/footer.ejs") %>

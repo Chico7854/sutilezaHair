@@ -20,4 +20,10 @@ router.put("/editar-atualizacao", admController.putAPIEditarAtualizacao);
 
 router.delete("/excluir-atualizacao", admController.deleteAPIExcluirAtualizacao);
 
+router.get("/listas", admController.getListas);
+
+router.get("/lista-clientes", admController.getAPIListaClientes);
+
+router.get("/lista-adms", admController.getAPIListaAdms);
+
 export default router;

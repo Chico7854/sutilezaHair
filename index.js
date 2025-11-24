@@ -1,5 +1,6 @@
-//Deixar os botao de editar deletar e criar, em atualizacao apenas para o adm
-//Pagina do cliente
+//TODO:
+//colocar valor no horario
+//lista adms
 
 import path from "path";
 

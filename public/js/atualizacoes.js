@@ -163,9 +163,3 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = "/atualizacoes";
     })
 });
-
-// Exports (opcional)
-window.renderUpdates = renderUpdates;
-window.createUpdateCard = createUpdateCard;
-window.abrirModalAtualizacao = abrirModal;
-window.fecharModalAtualizacao = fecharModal;

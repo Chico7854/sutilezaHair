@@ -1,0 +1,36 @@
+<%- include("./includes/head.ejs") %>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/listas.css">
+    <script src="/js/listas.js" defer></script>
+    <title>Listas</title>
+</head>
+<body>
+    <%- include("./includes/navigation.ejs") %>
+
+    <main class="listas-main">
+        <div class="container">
+            <h1 class="page-title">Listas de Usuários</h1>
+
+            <!-- Seção Clientes -->
+            <section class="lista-section">
+                <h2 class="section-title">Clientes</h2>
+                <div class="cards-grid" id="clientes-container">
+                    <!-- Cards serão criados pelo JS -->
+                </div>
+            </section>
+
+            <!-- Seção Administradores -->
+            <section class="lista-section">
+                <h2 class="section-title">Administradores</h2>
+                <div class="cards-grid" id="admins-container">
+                    <div class ="info-card admin-card">
+                        <h3>Claudete</h3>
+                        <p><strong>Email:</strong> adm@adm.com</p>
+                        <p><strong>Telefone:</strong> 41999981218</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <%- include("./includes/footer.ejs") %>

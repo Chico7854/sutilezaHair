@@ -19,7 +19,7 @@ export const postLogin = async (req, res) => {
         if (senha == cliente.senha) {
             req.session.cliente = cliente;
             req.session.isLoggedIn = true;
-            if (email == "lucas-tanaka@hotmail.com") {
+            if (email == "adm@adm.com") {
                 req.session.isAdm = true;
             } else {
                 req.session.isAdm = false;
