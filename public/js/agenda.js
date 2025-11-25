@@ -30,10 +30,23 @@ const horarios = [
     "22:00",
 ];
 
+const dataSelecionada = document.getElementById("dataSelecionada");
+const hoje = new Date();
+const ano = hoje.getFullYear();
+const mes = hoje.getMonth() + 1;
+const dia = hoje.getDate();
+dataSelecionada.value = `${ano}-${mes}-${dia}`;
+
 //TODO: calculo do horario inicio e final esta errado, 10h00 era pra ser 1000 mas esta apenas 10
 const carregarAgendamentos = async () => {
     try {
-        const res = await fetch("/adm/horarios");
+        const res = await fetch("/adm/horarios", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ data: dataSelecionada.value })
+        });
         const agendamentos = await res.json();
 
         agendamentos.forEach((a) => {
@@ -126,3 +139,5 @@ async function renderTabela() {
 }
 
 renderTabela();
+
+dataSelecionada.addEventListener("change", renderTabela);

@@ -8,7 +8,7 @@ router.get("/agenda-adm", admController.getAgendaAdm);
 
 router.post("/criar-horario", admController.postAPICriarHorario);
 
-router.get("/horarios", admController.getAPIHorarios);
+router.post("/horarios", admController.getAPIHorarios); //esta como post para poder enviar JSON para o body
 
 router.delete("/cancelar-horario", admController.deleteAPICancelarHorario);
 

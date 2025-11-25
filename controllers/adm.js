@@ -31,7 +31,23 @@ export const postAPICriarHorario = async (req, res) => {
 
 export const getAPIHorarios = async (req, res) => {
     try {
-        const listaHorarios = await Horario.find();
+        const data = new Date(req.body.data);
+        data.setHours(0, 0, 0, 0);
+        const diaSemana = data.getDay();
+
+        const inicioSemana = new Date(data);
+        inicioSemana.setDate(data.getDate() - diaSemana);
+
+        const fimSemana = new Date(inicioSemana);
+        fimSemana.setDate(inicioSemana.getDate() + 6);
+        fimSemana.setHours(23, 59, 59, 999);
+
+        const listaHorarios = await Horario.find({
+            data: {
+                $gte: inicioSemana,
+                $lte: fimSemana
+            }
+        });
 
         return res.json(listaHorarios);
     } catch(err) {
