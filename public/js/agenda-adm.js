@@ -19,8 +19,6 @@ let editarHorario = false;
 let id = null;
 
 const horarios = [
-    "08:00",
-    "08:30",
     "09:00",
     "09:30",
     "10:00",
@@ -41,13 +39,6 @@ const horarios = [
     "17:30",
     "18:00",
     "18:30",
-    "19:00",
-    "19:30",
-    "20:00",
-    "20:30",
-    "21:00",
-    "21:30",
-    "22:00",
 ];
 
 //TODO: calculo do horario inicio e final esta errado, 10h00 era pra ser 1000 mas esta apenas 10
@@ -79,11 +70,13 @@ const carregarAgendamentos = async () => {
 
             let horaInicio = a.data.getHours();
             let minutosInicio = a.data.getMinutes();
-            let horaFinal = horaInicio + ((a.duracao + minutosInicio) / 60);
-            let minutosFinal = (a.duracao + minutosInicio) % 60;
+            let horaFinal = String(horaInicio + Math.floor((a.duracao + minutosInicio) / 60)).padStart(2, "0");
+            let minutosFinal = String((a.duracao + minutosInicio) % 60).padStart(2, "0");
+            horaInicio = String(horaInicio).padStart(2, "0");
+            minutosInicio = String(minutosInicio).padStart(2, "0");
 
-            a.horarioInicio = parseInt(`${horaInicio} + ${minutosInicio}`);
-            a.horarioFinal = parseInt(`${horaFinal} + ${minutosFinal}`);
+            a.horarioInicio = parseInt(`${horaInicio}${minutosInicio}`);
+            a.horarioFinal = parseInt(`${horaFinal}${minutosFinal}`);
         });
 
         return agendamentos;
@@ -97,7 +90,7 @@ const carregarAgendamentos = async () => {
 const agendaBody = document.getElementById("agendaBody");
 
 function getAgendamento(dia, hora, agendamentos) {
-    hora = parseInt(hora.replace(";", ""));
+    hora = parseInt(hora.replace(":", ""));
     return agendamentos.find((a) => (a.dia === dia) && (a.horarioInicio <= hora && a.horarioFinal >= hora));
 }
 

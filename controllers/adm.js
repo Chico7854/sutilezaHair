@@ -57,7 +57,6 @@ export const getAPIHorarios = async (req, res) => {
 
 export const deleteAPICancelarHorario = async (req, res) => {
     try {
-        console.log("Here");
         const { id } = req.body;
 
         await Horario.findByIdAndDelete(id);
