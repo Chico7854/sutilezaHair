@@ -125,6 +125,7 @@ async function renderTabela() {
                 td.dataset.servico = ag.descricao;
                 td.dataset.duracao = ag.duracao;
                 td.dataset.pagamento = ag.pagamento;
+                td.dataset.valor = ag.valor;
                 td.dataset.status = "ocupado"
 
                 td.classList.add("slot-ocupado");
@@ -248,6 +249,7 @@ function openPopover(td, ev, pin = false) {
             document.getElementById("nomeAtendente").value = td.dataset.profissional;
             document.getElementById("descricao").value = td.dataset.servico;
             document.getElementById("pagamento").value = td.dataset.pagamento;
+            document.getElementById("valor").value = td.dataset.valor;
 
             closePopover();
 
@@ -384,6 +386,7 @@ const agendarHorario = async () => {
     const nomeAtendente = document.getElementById("nomeAtendente").value;
     const descricao = document.getElementById("descricao").value;
     const pagamento = document.getElementById("pagamento").value;
+    const valor = document.getElementById("valor").value;
     
     if (editarHorario) {
         console.log("Here");
@@ -410,7 +413,8 @@ const agendarHorario = async () => {
             nomeCliente: nomeCliente,
             nomeAtendente: nomeAtendente,
             descricao: descricao,
-            pagamento: pagamento
+            pagamento: pagamento,
+            valor: valor
         })
     });
 }

@@ -26,6 +26,10 @@ const horarioSchema = new Schema({
     pagamento: {
         type: String,
         required: true
+    },
+    valor: {
+        type: String,
+        require: true
     }
 });
 

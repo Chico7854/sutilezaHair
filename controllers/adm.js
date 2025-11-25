@@ -8,7 +8,7 @@ export const getAgendaAdm = (req, res) => {
 
 export const postAPICriarHorario = async (req, res) => {
     try {
-        const { data, horas, duracao, nomeCliente, nomeAtendente, descricao, pagamento } = req.body;
+        const { data, horas, duracao, nomeCliente, nomeAtendente, descricao, pagamento, valor } = req.body;
 
         const dataComHoras = `${data}T${horas}:00`;
 
@@ -18,7 +18,8 @@ export const postAPICriarHorario = async (req, res) => {
             nomeCliente: nomeCliente,
             nomeAtendente: nomeAtendente,
             descricao: descricao,
-            pagamento: pagamento
+            pagamento: pagamento,
+            valor: valor
         });
 
         await horario.save();
